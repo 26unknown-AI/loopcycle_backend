@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoopCycle — Give Things a Second Loop</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <a href="#" class="logo">Loop<span>Cycle</span></a>
+    <div class="nav-links">
+        <a href="#explore">Explore</a>
+        <a href="#how">How it works</a>
+        <a href="#impact">Our impact</a>
+        <a href="#trust">Trust</a>
+    </div>
+    <div class="nav-buttons">
+        <a href="javascript:void(0)" class="login" onclick="openAuth('login')">Log in</a>
+        <button class="signup" type="button" onclick="openAuth('signup')">Sign up</button>
+        <button id="accountNav" class="signup" type="button" style="display:none" onclick="openProfile()">Profile</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <div class="tag">A smarter way to reuse</div>
+        <h1>Give every good thing <span>a second loop.</span></h1>
+        <p class="hero-description">
+            Buy, sell, barter or rent pre-loved things from people around you — while keeping useful products out of landfills.
+        </p>
+        <div class="hero-buttons">
+            <button class="primary-btn" onclick="explore()">Start exploring →</button>
+            <button class="secondary-btn" onclick="sellItem()">♻ Give something a loop</button>
+        </div>
+    </div>
+
+    <!-- HERO VISUAL -->
+    <div class="hero-visual">
+        <div class="circle"></div>
+        <div class="product-card main-product">
+            <div class="product-image">📚</div>
+            <div class="product-info">
+                <h3>Engineering Books</h3>
+                <p>Good condition • 2nd owner</p>
+                <div class="price">₹350</div>
+            </div>
+        </div>
+
+        <div class="product-card floating-card">
+            <strong>✓ Verified Loop Member</strong>
+            <div class="verified">⭐ 4.9 Trust Score</div>
+        </div>
+    </div>
+</section>
+
+<!-- SEARCH -->
+<section class="search-section">
+    <div class="search-box">
+        <span class="search-icon">🔎</span>
+        <input id="searchInput" type="text" placeholder="What are you looking for?">
+        <button class="search-btn" onclick="searchItem()">Search</button>
+    </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" id="explore">
+    <div class="section-heading">
+        <div><h2>Find your next loop</h2></div>
+        <p>Don't buy new when something useful is already waiting for its next owner.</p>
+    </div>
+
+    <div class="categories">
+        <div class="category" onclick="category('Books')">
+            <div class="category-icon">📚</div>
+            <div>
+                <h3>Books</h3>
+                <p>Read. Share. Repeat.</p>
+            </div>
+        </div>
+
+        <div class="category" onclick="category('Electronics')">
+            <div class="category-icon">💻</div>
+            <div>
+                <h3>Electronics</h3>
+                <p>Tech deserves another life.</p>
+            </div>
+        </div>
+
+        <div class="category" onclick="category('Furniture')">
+            <div class="category-icon">🪑</div>
+            <div>
+                <h3>Furniture</h3>
+                <p>Good furniture shouldn't go waste.</p>
+            </div>
+        </div>
+
+        <div class="category" onclick="category('Vehicles')">
+            <div class="category-icon">🚲</div>
+            <div>
+                <h3>Vehicles</h3>
+                <p>Move things, not waste.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="listing-results" id="listingResults">
+        <div class="listing-results-header">
+            <h3 id="listingTitle">All marketplace items</h3>
+            <span class="listing-count" id="listingCount">0 items</span>
+        </div>
+        <div class="listing-grid" id="listingGrid"></div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+    <div class="section-heading">
+        <h2>How LoopCycle works</h2>
+        <p>Simple enough for anyone. Meaningful enough to make a difference.</p>
+    </div>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">01</div>
+            <h3>List or discover</h3>
+            <p>Upload something you no longer need, or discover useful items listed by people around you.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">02</div>
+            <h3>Choose your loop</h3>
+            <p>Buy it, exchange it, barter for another item or rent it — you decide how the next loop happens.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">03</div>
+            <h3>Complete the loop</h3>
+            <p>Meet safely, complete the transaction and give the product a new life with its next owner.</p>
+        </div>
+    </div>
+</section>
+
+<!-- IMPACT (SDG 12) -->
+<section class="section" id="impact">
+    <div class="impact">
+        <h2>Every loop creates an impact.</h2>
+        <p>When a product gets reused instead of replaced, we save money, resources and unnecessary waste.</p>
+        <div class="stats">
+            <div class="stat">
+                <h3>12,480+</h3>
+                <p>Items reused</p>
+            </div>
+            <div class="stat">
+                <h3>8.6K kg</h3>
+                <p>Estimated waste avoided</p>
+            </div>
+            <div class="stat">
+                <h3>4,200+</h3>
+                <p>Active loop members</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TRUST -->
+<section class="section" id="trust">
+    <div class="trust-box">
+        <h2>Built on trust, not just transactions.</h2>
+        <p>Because second-hand shouldn't mean second-class.</p>
+        <div class="trust-items">
+            <div class="trust-item">
+                <div class="icon">🛡️</div>
+                <h4>Verified users</h4>
+                <p>Know who you're dealing with before making a transaction.</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon">⭐</div>
+                <h4>Loop reputation</h4>
+                <p>Build trust through ratings and successful loops.</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon">🤝</div>
+                <h4>Dispute support</h4>
+                <p>Problems? Our support system helps resolve transaction issues.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Your unused thing could be someone's perfect find.</h2>
+    <p>Don't let useful things sit unused. Put them back into the loop.</p>
+    <button class="primary-btn" onclick="sellItem()">Start a new loop →</button>
+</section>
+
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAuth()">×</button>
+    <div id="loginFormBox">
+      <h2>Welcome back</h2>
+      <p class="modal-subtitle">Log in to continue your LoopCycle journey.</p>
+      <form onsubmit="loginUser(event)">
+        <div class="modal-form-group"><label>Email</label><input id="loginEmail" type="email" placeholder="you@example.com" required></div>
+        <div class="modal-form-group"><label>Password</label><input id="loginPassword" type="password" placeholder="••••••••" required></div>
+        <button class="primary-btn modal-full-btn" type="submit">Log in →</button>
+      </form>
+      <div class="modal-switch">New to LoopCycle? <button onclick="switchAuth('signup')">Create an account</button></div>
+    </div>
+    <div id="signupFormBox" style="display:none">
+      <h2>Join LoopCycle</h2>
+      <p class="modal-subtitle">Create an account and give useful things a second loop.</p>
+      <form onsubmit="signupUser(event)">
+        <div class="modal-form-group"><label>Full name</label><input id="signupName" type="text" placeholder="Your name" required></div>
+        <div class="modal-form-group"><label>Email</label><input id="signupEmail" type="email" placeholder="you@example.com" required></div>
+        <div class="modal-form-group"><label>Password</label><input id="signupPassword" type="password" placeholder="Create a password" minlength="6" required></div>
+        <button class="primary-btn modal-full-btn" type="submit">Create account →</button>
+      </form>
+      <div class="modal-switch">Already a member? <button onclick="switchAuth('login')">Log in</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- LISTING MODAL -->
+<div id="listingModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" type="button" onclick="closeListing()">×</button>
+    <h2>List an item</h2>
+    <p class="modal-subtitle">Add your item so other LoopCycle members can find it.</p>
+    <form id="listingForm" onsubmit="saveListing(event)">
+      <div class="listing-form-grid">
+        <div class="modal-form-group full">
+          <label>Item name</label>
+          <input id="itemTitle" type="text" placeholder="e.g. Engineering Books" required>
+        </div>
+        <div class="modal-form-group">
+          <label>Category</label>
+          <select id="itemCategory" required>
+            <option value="">Choose category</option>
+            <option value="Books">📚 Books</option>
+            <option value="Electronics">💻 Electronics</option>
+            <option value="Furniture">🪑 Furniture</option>
+            <option value="Vehicles">🚲 Vehicles</option>
+          </select>
+        </div>
+        <div class="modal-form-group full">
+          <label>What do you want to do with this item?</label>
+          <div class="listing-type-choices">
+            <div class="listing-type-choice"><input id="typeBuy" name="itemType" type="radio" value="Buy" checked><label for="typeBuy">🛒 Buy</label></div>
+            <div class="listing-type-choice"><input id="typeRent" name="itemType" type="radio" value="Rent"><label for="typeRent">🏠 Rent</label></div>
+            <div class="listing-type-choice"><input id="typeExchange" name="itemType" type="radio" value="Exchange"><label for="typeExchange">🔄 Exchange</label></div>
+            <div class="listing-type-choice"><input id="typeBarter" name="itemType" type="radio" value="Barter"><label for="typeBarter">🤝 Barter</label></div>
+          </div>
+        </div>
+        <div class="modal-form-group">
+          <label>Condition</label>
+          <select id="itemCondition" required>
+            <option>Like new</option>
+            <option>Good</option>
+            <option>Fair</option>
+            <option>Used</option>
+          </select>
+        </div>
+        <div class="modal-form-group">
+          <label>Price (₹)</label>
+          <input id="itemPrice" type="number" min="0" step="1" placeholder="350">
+        </div>
+        <div class="modal-form-group full">
+          <label>Photo</label>
+          <input id="itemPhoto" type="file" accept="image/*" onchange="previewListingPhoto(event)">
+          <div class="photo-preview" id="photoPreview">Choose a photo of your item</div>
+        </div>
+        <div class="modal-form-group full">
+          <label>Details</label>
+          <input id="itemDetails" type="text" placeholder="e.g. 2nd owner, all pages intact">
+        </div>
+        <div class="modal-form-group full">
+          <label>Description</label>
+          <textarea id="itemDescription" placeholder="Tell buyers about the item, condition, age, accessories, etc." required></textarea>
+        </div>
+      </div>
+      <button class="primary-btn modal-full-btn" type="submit">Publish item →</button>
+    </form>
+  </div>
+</div>
+
+<!-- ACTION MODAL (Escrow Buy & Details) -->
+<div id="actionModal" class="modal-overlay">
+  <div class="modal-box action-modal-content">
+    <button class="modal-close" type="button" onclick="closeActionModal()">×</button>
+    <div id="actionModalBody"></div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div id="profileModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeProfile()">×</button>
+    <div class="profile-top">
+      <div class="profile-avatar" id="profileAvatar">U</div>
+      <div><h3 id="profileName">Loop Member</h3><div class="profile-email" id="profileEmail"></div></div>
+    </div>
+    <h2>My profile</h2>
+    <p class="modal-subtitle">Your LoopCycle account and activity.</p>
+    <div class="profile-stats">
+      <div class="profile-stat"><strong id="profileItemCount">0</strong><span>Items listed</span></div>
+      <div class="profile-stat"><strong>0</strong><span>Loops completed</span></div>
+      <div class="profile-stat"><strong>New</strong><span>Trust status</span></div>
+    </div>
+    <div class="profile-listings">
+      <h3>My listings</h3>
+      <div id="profileListings"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="primary-btn" onclick="closeProfile();explore()">Explore marketplace</button>
+      <button class="secondary-btn" onclick="closeProfile();openListing()">+ List an item</button>
+      <button class="logout-btn" onclick="logoutUser()">Log out</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div>© 2026 LoopCycle — SDG 12 Responsible Consumption</div>
+    <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+    </div>
+</footer>
+
+<!-- Link to your JavaScript file -->
+<script src="script.js"></script>
+</body>
+</html>
