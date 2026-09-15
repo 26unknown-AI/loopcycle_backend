@@ -3471,13 +3471,21 @@ function openProfile() {
         return;
     }
 
-    document.getElementById("profileName").textContent = user.name || "Loop Member";
-    document.getElementById("profileEmail").textContent = user.email || "";
-    document.getElementById("profileAvatar").textContent = (user.name || "U").charAt(0).toUpperCase();
-    document.getElementById("profileTrustScore").textContent = user.trust_score || 0;
+    const nameEl = document.getElementById("profileName");
+    if (nameEl) nameEl.textContent = user.name || "Loop Member";
+
+    const emailEl = document.getElementById("profileEmail");
+    if (emailEl) emailEl.textContent = user.email || "";
+
+    const avatarEl = document.getElementById("profileAvatar");
+    if (avatarEl) avatarEl.textContent = (user.name || "U").charAt(0).toUpperCase();
+
+    const trustEl = document.getElementById("profileTrustScore");
+    if (trustEl) trustEl.textContent = user.trust_score || 0;
 
     const myItems = cachedListings.filter(item => item.seller === user.id);
-    document.getElementById("profileItemCount").textContent = myItems.length;
+    const countEl = document.getElementById("profileItemCount");
+    if (countEl) countEl.textContent = myItems.length;
 
     const listingsBox = document.getElementById("profileListings");
     if (listingsBox) {
@@ -3485,16 +3493,20 @@ function openProfile() {
             listingsBox.innerHTML = '<div class="profile-empty">No items listed yet. Click "+ List an item" to add one.</div>';
         } else {
             listingsBox.innerHTML = myItems.map(item => `
-                <div class="profile-list-item" style="padding: 10px; border-bottom: 1px solid #eee;">
-                    <strong>${escapeHtml(item.title)}</strong> - ${escapeHtml(item.transaction_type)} (₹${item.price || 0})
+                <div class="profile-list-item" style="padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                    <strong>${escapeHtml(item.title)}</strong> 
+                    <span>${escapeHtml(item.transaction_type)} (${item.price ? '₹' + item.price : 'Barter'})</span>
                 </div>
             `).join("");
         }
     }
 
-    document.getElementById("profileModal").classList.add("active");
+    // Safely open the profile modal
+    const modal = document.getElementById("profileModal");
+    if (modal) {
+        modal.classList.add("active");
+    }
 }
-
 function closeProfile() {
     const modal = document.getElementById("profileModal");
     if (modal) modal.classList.remove("active");
