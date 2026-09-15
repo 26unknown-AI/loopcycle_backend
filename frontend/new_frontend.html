@@ -1,0 +1,5629 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoopCycle — Give Things a Second Loop</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================
+           GLOBAL
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #f7f7ef;
+            color: #18201c;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        nav {
+            width: 100%;
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(247, 247, 239, 0.88);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #18a878;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            font-size: 15px;
+            color: #5f6662;
+        }
+
+        .nav-links a {
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #149968;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .login {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .signup {
+            background: #19a979;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 7px 20px rgba(25, 169, 121, 0.2);
+            transition: 0.3s;
+        }
+
+        .signup:hover {
+            transform: translateY(-2px);
+            background: #128e64;
+        }
+
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            max-width: 1200px;
+            margin: auto;
+            padding: 90px 7% 70px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e3f3eb;
+            color: #168a61;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .tag::before {
+            content: "♻";
+            font-size: 16px;
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(48px, 6vw, 76px);
+            line-height: 1.03;
+            letter-spacing: -2px;
+            font-weight: 500;
+        }
+
+        .hero h1 span {
+            color: #18a878;
+            font-style: italic;
+        }
+
+        .hero-description {
+            margin-top: 25px;
+            max-width: 570px;
+            color: #666d68;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            border: none;
+            background: #18a878;
+            color: white;
+            padding: 15px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 12px 30px rgba(24, 168, 120, 0.25);
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(24, 168, 120, 0.35);
+        }
+
+        .secondary-btn {
+            padding: 14px 25px;
+            border-radius: 30px;
+            background: transparent;
+            border: 1px solid #d0d5d1;
+            color: #39423e;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: white;
+        }
+
+
+        /* =========================
+           HERO VISUAL
+        ========================== */
+
+        .hero-visual {
+            position: relative;
+            height: 430px;
+        }
+
+        .circle {
+            width: 360px;
+            height: 360px;
+            background: #dcefe7;
+            border-radius: 50%;
+            position: absolute;
+            right: 10px;
+            top: 30px;
+        }
+
+        .product-card {
+            position: absolute;
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-product {
+            width: 270px;
+            right: 65px;
+            top: 55px;
+            transform: rotate(3deg);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .product-image {
+            height: 180px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #dcefe7, #f1e7d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+        }
+
+        .product-info {
+            padding-top: 15px;
+        }
+
+        .product-info h3 {
+            font-size: 17px;
+        }
+
+        .product-info p {
+            color: #7a817d;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .price {
+            color: #149968;
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 12px;
+        }
+
+        .floating-card {
+            left: 0;
+            bottom: 35px;
+            width: 210px;
+            transform: rotate(-5deg);
+        }
+
+        .floating-card strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .verified {
+            color: #159b6c;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        .search-section {
+            max-width: 1050px;
+            margin: auto;
+            padding: 0 7% 80px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 9px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.07);
+        }
+
+        .search-icon {
+            padding-left: 20px;
+            font-size: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 15px;
+            font-size: 15px;
+            background: transparent;
+        }
+
+        .search-btn {
+            background: #18201c;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 13px 24px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           SECTION
+        ========================== */
+
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 70px 7%;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 42px;
+            font-weight: 500;
+        }
+
+        .section-heading p {
+            color: #737a76;
+            max-width: 450px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           CATEGORY
+        ========================== */
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .category {
+            min-height: 180px;
+            border-radius: 25px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.35s;
+            cursor: pointer;
+        }
+
+        .category:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .category:nth-child(1) {
+            background: #eee3eb;
+        }
+
+        .category:nth-child(2) {
+            background: #dfebf5;
+        }
+
+        .category:nth-child(3) {
+            background: #e1efdf;
+        }
+
+        .category:nth-child(4) {
+            background: #f3e7d4;
+        }
+
+        .category-icon {
+            font-size: 36px;
+        }
+
+        .category h3 {
+            font-size: 19px;
+        }
+
+        .category p {
+            font-size: 13px;
+            color: #626a65;
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           HOW IT WORKS
+        ========================== */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .step {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid #e7e9e5;
+            transition: 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #dff2e9;
+            color: #168d64;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #707873;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           IMPACT
+        ========================== */
+
+        .impact {
+            background: #183c30;
+            color: white;
+            border-radius: 35px;
+            padding: 55px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact::after {
+            content: "♻";
+            position: absolute;
+            right: 30px;
+            top: -35px;
+            font-size: 180px;
+            opacity: 0.07;
+        }
+
+        .impact h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 40px;
+            font-weight: 500;
+        }
+
+        .impact > p {
+            margin-top: 12px;
+            color: #bdd2c9;
+            max-width: 550px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 40px;
+            gap: 30px;
+        }
+
+        .stat h3 {
+            font-size: 34px;
+        }
+
+        .stat p {
+            color: #b9cec5;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           TRUST
+        ========================== */
+
+        .trust-box {
+            background: #e0f0ef;
+            border-radius: 30px;
+            padding: 45px;
+            text-align: center;
+        }
+
+        .trust-box h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 38px;
+            font-weight: 500;
+        }
+
+        .trust-box > p {
+            color: #69736e;
+            margin-top: 10px;
+        }
+
+        .trust-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 35px;
+            gap: 25px;
+        }
+
+        .trust-item {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .trust-item .icon {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .trust-item h4 {
+            margin-bottom: 6px;
+        }
+
+        .trust-item p {
+            font-size: 13px;
+            color: #69736e;
+        }
+
+
+        /* =========================
+           HELP & DONATE
+        ========================== */
+
+        .help-donate {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 7% 70px;
+        }
+
+        .help-donate-box {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e3f5ec, #f2f5e5);
+            border: 1px solid #d7e9df;
+            border-radius: 35px;
+            padding: 55px;
+        }
+
+        .help-donate-box::after {
+            content: "❤️";
+            position: absolute;
+            right: 35px;
+            top: -35px;
+            font-size: 180px;
+            opacity: 0.07;
+            pointer-events: none;
+        }
+
+        .help-donate-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .help-donate-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.72);
+            color: #14865e;
+            border: 1px solid #d4e9dc;
+            border-radius: 30px;
+            padding: 8px 15px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .help-donate-box h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(36px, 5vw, 54px);
+            line-height: 1.08;
+            font-weight: 500;
+            max-width: 720px;
+        }
+
+        .help-donate-box h2 span {
+            color: #159b6c;
+            font-style: italic;
+        }
+
+        .help-donate-box > .help-donate-content > p {
+            max-width: 700px;
+            margin-top: 18px;
+            color: #5f6b64;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .foundation-card {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid #dce9e1;
+            border-radius: 23px;
+            padding: 25px;
+            max-width: 760px;
+            box-shadow: 0 12px 35px rgba(20, 100, 70, 0.06);
+        }
+
+        .foundation-card h3 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .foundation-card p {
+            color: #68736d;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .help-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .help-step {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(205, 224, 214, 0.8);
+            border-radius: 18px;
+            padding: 20px;
+        }
+
+        .help-step-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .help-step strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .help-step span {
+            display: block;
+            color: #69736e;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .help-donate-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .help-donate-primary,
+        .help-donate-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            padding: 14px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .help-donate-primary {
+            background: #18a878;
+            color: white;
+            box-shadow: 0 10px 25px rgba(24, 168, 120, 0.2);
+        }
+
+        .help-donate-primary:hover {
+            background: #128e64;
+            transform: translateY(-2px);
+        }
+
+        .help-donate-secondary {
+            background: white;
+            color: #14865e;
+            border: 1px solid #cbded3;
+        }
+
+        .help-donate-secondary:hover {
+            background: #f7fbf8;
+            transform: translateY(-2px);
+        }
+
+        .help-note {
+            margin-top: 15px;
+            color: #7a817d;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           CTA
+        ========================== */
+
+        .cta {
+            max-width: 1100px;
+            margin: 70px auto;
+            padding: 70px 30px;
+            text-align: center;
+            background: #e5f1df;
+            border-radius: 35px;
+        }
+
+        .cta h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 48px;
+            font-weight: 500;
+        }
+
+        .cta p {
+            color: #69716c;
+            margin: 15px auto 30px;
+            max-width: 550px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            border-top: 1px solid #dedfd9;
+            padding: 40px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #6b716d;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-links a:hover {
+            color: #159b6c;
+        }
+
+
+        /* =========================
+           ANIMATION
+        ========================== */
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(3deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(3deg);
+            }
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 60px;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                margin-top: 20px;
+            }
+
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .trust-items {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                flex-direction: column;
+                align-items: start;
+                gap: 15px;
+            }
+
+            .help-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .help-donate-box {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 17px 5%;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .login {
+                display: none;
+            }
+
+            .hero {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .hero-visual {
+                height: 350px;
+            }
+
+            .circle {
+                width: 290px;
+                height: 290px;
+                right: 5%;
+            }
+
+            .main-product {
+                right: 10%;
+                width: 230px;
+            }
+
+            .floating-card {
+                width: 175px;
+                left: 0;
+            }
+
+            .categories {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .category {
+                min-height: 150px;
+                padding: 18px;
+            }
+
+            .section-heading h2 {
+                font-size: 34px;
+            }
+
+            .impact {
+                padding: 35px 25px;
+            }
+
+            .trust-box {
+                padding: 35px 20px;
+            }
+
+            .help-donate {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .help-donate-box {
+                padding: 35px 20px;
+                border-radius: 28px;
+            }
+
+            .help-donate-box h2 {
+                font-size: 37px;
+            }
+
+            .help-donate-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .help-donate-primary,
+            .help-donate-secondary {
+                width: 100%;
+            }
+
+            .cta {
+                margin: 50px 5%;
+                padding: 50px 20px;
+            }
+
+            .cta h2 {
+                font-size: 38px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+
+        /* =========================
+           POPUP AUTH + PROFILE
+        ========================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 25, 21, 0.48);
+            backdrop-filter: blur(7px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 5000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            width: min(100%, 460px);
+            max-height: 92vh;
+            overflow: auto;
+            background: #fff;
+            border-radius: 28px;
+            padding: 34px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 16px;
+            top: 14px;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: #f2f5f1;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .modal-box h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 38px;
+            font-weight: 500;
+            margin-bottom: 7px;
+        }
+
+        .modal-subtitle {
+            color: #707873;
+            line-height: 1.6;
+            margin-bottom: 23px;
+        }
+
+        .modal-form-group {
+            margin-bottom: 15px;
+        }
+
+        .modal-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .modal-form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dfe4df;
+            border-radius: 13px;
+            outline: none;
+            font: inherit;
+            background: #fafbf9;
+        }
+
+        .modal-form-group input:focus {
+            border-color: #18a878;
+            box-shadow: 0 0 0 3px rgba(24, 168, 120, 0.1);
+        }
+
+        .modal-full-btn {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .modal-switch {
+            text-align: center;
+            margin-top: 18px;
+            color: #707873;
+            font-size: 14px;
+        }
+
+        .modal-switch button {
+            border: 0;
+            background: transparent;
+            color: #159b6c;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 8px 0 25px;
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: #dff2e9;
+            color: #168d64;
+            display: grid;
+            place-items: center;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .profile-email {
+            color: #707873;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 23px;
+        }
+
+        .profile-stat {
+            background: #f5f7f3;
+            border-radius: 16px;
+            padding: 17px;
+        }
+
+        .profile-stat strong {
+            display: block;
+            color: #159b6c;
+            font-size: 22px;
+        }
+
+        .profile-stat span {
+            color: #707873;
+            font-size: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .logout-btn {
+            border: 1px solid #e4cccc;
+            color: #a84a4a;
+            background: #fff;
+            padding: 13px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           MARKETPLACE LISTINGS
+        ========================== */
+
+        .listing-results {
+            margin-top: 34px;
+        }
+
+        .listing-results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+
+        .listing-results-header h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        .listing-count {
+            color: #707873;
+            font-size: 13px;
+        }
+
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .listing-card {
+            background: #fff;
+            border: 1px solid #e5e9e5;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: 0.25s;
+        }
+
+        .listing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .listing-photo {
+            height: 190px;
+            background: #edf3ef;
+            display: grid;
+            place-items: center;
+            font-size: 54px;
+            overflow: hidden;
+        }
+
+        .listing-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .listing-body {
+            padding: 18px;
+        }
+
+        .listing-badge {
+            display: inline-block;
+            background: #e0f3e9;
+            color: #14865e;
+            border-radius: 20px;
+            padding: 5px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .listing-body h4 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .listing-body p {
+            font-size: 13px;
+            color: #707873;
+            line-height: 1.5;
+        }
+
+        .listing-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #159b6c;
+            margin-top: 12px;
+        }
+
+        .listing-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 10px;
+            color: #7a817d;
+            font-size: 11px;
+        }
+
+        .empty-listings {
+            background: #fff;
+            border: 1px dashed #ccd7d0;
+            border-radius: 20px;
+            padding: 28px;
+            text-align: center;
+            color: #707873;
+        }
+
+        .category.active {
+            outline: 3px solid rgba(24, 168, 120, 0.28);
+            transform: translateY(-4px);
+        }
+
+        .photo-preview {
+            height: 150px;
+            border: 1px dashed #cbd7d0;
+            border-radius: 14px;
+            background: #f7faf7;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            margin-top: 8px;
+            color: #7a817d;
+            font-size: 13px;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .listing-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .listing-form-grid .full {
+            grid-column: 1 / -1;
+        }
+
+        .modal-form-group select,
+        .modal-form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dfe4df;
+            border-radius: 13px;
+            outline: none;
+            font: inherit;
+            background: #fafbf9;
+        }
+
+        .modal-form-group textarea {
+            min-height: 95px;
+            resize: vertical;
+        }
+
+        .modal-form-group select:focus,
+        .modal-form-group textarea:focus {
+            border-color: #18a878;
+            box-shadow: 0 0 0 3px rgba(24, 168, 120, 0.1);
+        }
+
+        .listing-type-choices {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .listing-type-choice {
+            position: relative;
+        }
+
+        .listing-type-choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .listing-type-choice label {
+            display: block;
+            text-align: center;
+            padding: 13px 8px;
+            border: 1px solid #dfe4df;
+            border-radius: 13px;
+            background: #fafbf9;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .listing-type-choice input:checked + label {
+            border-color: #18a878;
+            background: #e0f3e9;
+            color: #14865e;
+            box-shadow: 0 0 0 2px rgba(24, 168, 120, 0.12);
+        }
+
+        .listing-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .listing-action-btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 10px 13px;
+            background: #18a878;
+            color: #fff;
+            font: 600 12px "DM Sans", sans-serif;
+            cursor: pointer;
+        }
+
+        .listing-action-btn.secondary {
+            background: #edf5f0;
+            color: #14865e;
+        }
+
+
+        /* =========================
+           MARKETPLACE ACTION MODALS
+        ========================== */
+
+        .action-modal-content {
+            max-width: 560px;
+        }
+
+        .action-item-head {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin: 8px 0 20px;
+        }
+
+        .action-item-thumb {
+            width: 110px;
+            height: 90px;
+            border-radius: 16px;
+            background: #edf3ef;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            font-size: 38px;
+            flex: none;
+        }
+
+        .action-item-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .action-item-head h3 {
+            font-size: 23px;
+            margin: 0 0 5px;
+        }
+
+        .action-item-head p {
+            margin: 0;
+            color: #707873;
+            font-size: 13px;
+        }
+
+        .action-details {
+            background: #f6f8f5;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 16px;
+        }
+
+        .action-details p {
+            margin: 7px 0;
+            color: #4e5752;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .action-details strong {
+            color: #202823;
+        }
+
+        .action-confirm {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .action-note {
+            font-size: 12px;
+            color: #7a817d;
+            margin-top: 10px;
+            line-height: 1.45;
+        }
+
+        .success-box {
+            text-align: center;
+            padding: 12px 4px;
+        }
+
+        .success-icon {
+            font-size: 45px;
+            margin-bottom: 8px;
+        }
+
+        .success-box h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .success-box p {
+            color: #66706a;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           PROFILE LISTING MANAGEMENT
+        ========================== */
+
+        .profile-listings {
+            margin-top: 22px;
+            border-top: 1px solid #e5e9e5;
+            padding-top: 18px;
+        }
+
+        .profile-listings h3 {
+            font-size: 19px;
+            margin: 0 0 12px;
+        }
+
+        .profile-list-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf0ed;
+        }
+
+        .profile-list-thumb {
+            width: 58px;
+            height: 52px;
+            border-radius: 10px;
+            background: #edf3ef;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            flex: none;
+            font-size: 23px;
+        }
+
+        .profile-list-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-list-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .profile-list-info strong {
+            display: block;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-list-info span {
+            font-size: 11px;
+            color: #78807b;
+        }
+
+        .profile-list-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .profile-mini-btn {
+            border: 1px solid #d9e2dc;
+            background: #fff;
+            color: #14865e;
+            border-radius: 9px;
+            padding: 7px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .profile-mini-btn:hover {
+            background: #eaf6f0;
+        }
+
+        .profile-mini-btn.danger {
+            color: #c95c58;
+            border-color: #ecd0cf;
+        }
+
+        .profile-mini-btn.danger:hover {
+            background: #fff0ef;
+        }
+
+        .profile-mini-btn.enlist {
+            color: #14865e;
+            border-color: #c8e4d5;
+            background: #eaf8f0;
+        }
+
+        .profile-empty {
+            font-size: 12px;
+            color: #7a817d;
+            padding: 8px 0;
+        }
+
+        .unlisted-label {
+            display: inline-block;
+            margin-left: 5px;
+            padding: 3px 7px;
+            border-radius: 10px;
+            background: #fff0ef;
+            color: #c95c58;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 850px) {
+            .listing-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .modal-box {
+                padding: 28px 22px;
+            }
+
+            .profile-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .listing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .listing-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .listing-form-grid .full {
+                grid-column: auto;
+            }
+
+            .listing-results-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .listing-type-choices {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .profile-list-item {
+                align-items: flex-start;
+            }
+
+            .profile-list-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav>
+
+        <a href="#" class="logo">
+            Loop<span>Cycle</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#explore">Explore</a>
+            <a href="#how">How it works</a>
+            <a href="#impact">Our impact</a>
+            <a href="#trust">Trust</a>
+
+            <!-- NEW: HELP & DONATE -->
+            <a href="#help-donate">❤️ Help & Donate</a>
+        </div>
+
+        <div class="nav-buttons">
+
+            <a href="javascript:void(0)"
+               class="login"
+               onclick="openAuth('login')">
+                Log in
+            </a>
+
+            <button
+                id="signupNav"
+                class="signup"
+                type="button"
+                onclick="openAuth('signup')">
+                Sign up
+            </button>
+
+            <button
+                id="accountNav"
+                class="signup"
+                type="button"
+                style="display:none"
+                onclick="openProfile()">
+                Profile
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+        <div>
+
+            <div class="tag">
+                A smarter way to reuse
+            </div>
+
+            <h1>
+                Give every good thing
+                <span>a second loop.</span>
+            </h1>
+
+            <p class="hero-description">
+                Buy, sell, barter or rent pre-loved things
+                from people around you — while keeping
+                useful products out of landfills.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="primary-btn"
+                    onclick="explore()">
+                    Start exploring →
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="sellItem()">
+                    ♻ Give something a loop
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO VISUAL -->
+
+        <div class="hero-visual">
+
+            <div class="circle"></div>
+
+            <div class="product-card main-product">
+
+                <div class="product-image">
+                    📚
+                </div>
+
+                <div class="product-info">
+
+                    <h3>
+                        Engineering Books
+                    </h3>
+
+                    <p>
+                        Good condition • 2nd owner
+                    </p>
+
+                    <div class="price">
+                        ₹350
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="product-card floating-card">
+
+                <strong>
+                    ✓ Verified Loop Member
+                </strong>
+
+                <div class="verified">
+                    ⭐ 4.9 Trust Score
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SEARCH
+    ========================== -->
+
+    <section class="search-section">
+
+        <div class="search-box">
+
+            <span class="search-icon">
+                🔎
+            </span>
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="What are you looking for?">
+
+            <button
+                class="search-btn"
+                type="button"
+                onclick="searchItem()">
+                Search
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================== -->
+
+    <section class="section" id="explore">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>
+                    Find your next loop
+                </h2>
+            </div>
+
+            <p>
+                Don't buy new when something useful
+                is already waiting for its next owner.
+            </p>
+
+        </div>
+
+
+        <div class="categories">
+
+            <div class="category"
+                 onclick="category('Books')">
+
+                <div class="category-icon">
+                    📚
+                </div>
+
+                <div>
+                    <h3>Books</h3>
+                    <p>Read. Share. Repeat.</p>
+                </div>
+
+            </div>
+
+
+            <div class="category"
+                 onclick="category('Electronics')">
+
+                <div class="category-icon">
+                    💻
+                </div>
+
+                <div>
+                    <h3>Electronics</h3>
+                    <p>Tech deserves another life.</p>
+                </div>
+
+            </div>
+
+
+            <div class="category"
+                 onclick="category('Furniture')">
+
+                <div class="category-icon">
+                    🪑
+                </div>
+
+                <div>
+                    <h3>Furniture</h3>
+                    <p>Good furniture shouldn't go waste.</p>
+                </div>
+
+            </div>
+
+
+            <div class="category"
+                 onclick="category('Vehicles')">
+
+                <div class="category-icon">
+                    🚲
+                </div>
+
+                <div>
+                    <h3>Vehicles</h3>
+                    <p>Move things, not waste.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="listing-results" id="listingResults">
+
+            <div class="listing-results-header">
+
+                <h3 id="listingTitle">
+                    All marketplace items
+                </h3>
+
+                <span class="listing-count" id="listingCount">
+                    0 items
+                </span>
+
+            </div>
+
+            <div
+                class="listing-grid"
+                id="listingGrid">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================== -->
+
+    <section class="section" id="how">
+
+        <div class="section-heading">
+
+            <h2>
+                How LoopCycle works
+            </h2>
+
+            <p>
+                Simple enough for anyone. Meaningful enough
+                to make a difference.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    List or discover
+                </h3>
+
+                <p>
+                    Upload something you no longer need,
+                    or discover useful items listed by people
+                    around you.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Choose your loop
+                </h3>
+
+                <p>
+                    Buy it, exchange it, barter for another
+                    item or rent it — you decide how the
+                    next loop happens.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    Complete the loop
+                </h3>
+
+                <p>
+                    Meet safely, complete the transaction
+                    and give the product a new life with
+                    its next owner.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         IMPACT
+    ========================== -->
+
+    <section class="section" id="impact">
+
+        <div class="impact">
+
+            <h2>
+                Every loop creates an impact.
+            </h2>
+
+            <p>
+                When a product gets reused instead of replaced,
+                we save money, resources and unnecessary waste.
+            </p>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    <h3>12,480+</h3>
+                    <p>Items reused</p>
+                </div>
+
+                <div class="stat">
+                    <h3>8.6K kg</h3>
+                    <p>Estimated waste avoided</p>
+                </div>
+
+                <div class="stat">
+                    <h3>4,200+</h3>
+                    <p>Active loop members</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         TRUST
+    ========================== -->
+
+    <section class="section" id="trust">
+
+        <div class="trust-box">
+
+            <h2>
+                Built on trust, not just transactions.
+            </h2>
+
+            <p>
+                Because second-hand shouldn't mean second-class.
+            </p>
+
+
+            <div class="trust-items">
+
+                <div class="trust-item">
+
+                    <div class="icon">
+                        🛡️
+                    </div>
+
+                    <h4>
+                        Verified users
+                    </h4>
+
+                    <p>
+                        Know who you're dealing with
+                        before making a transaction.
+                    </p>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <div class="icon">
+                        ⭐
+                    </div>
+
+                    <h4>
+                        Loop reputation
+                    </h4>
+
+                    <p>
+                        Build trust through ratings
+                        and successful loops.
+                    </p>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <div class="icon">
+                        🤝
+                    </div>
+
+                    <h4>
+                        Dispute support
+                    </h4>
+
+                    <p>
+                        Problems? Our support system
+                        helps resolve transaction issues.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         HELP & DONATE
+    ========================== -->
+
+    <section class="help-donate" id="help-donate">
+
+        <div class="help-donate-box">
+
+            <div class="help-donate-content">
+
+                <div class="help-donate-tag">
+                    ❤️ Make a difference
+                </div>
+
+                <h2>
+                    Give more than things.
+                    <span>Give hope.</span>
+                </h2>
+
+                <p>
+                    Sometimes the best way to give something
+                    a second life is to help someone who needs it.
+                    LoopCycle supports responsible reuse and connects
+                    our community with organizations working to create
+                    real social impact.
+                </p>
+
+
+                <!-- FOUNDATION CARD -->
+
+                <div class="foundation-card">
+
+                    <h3>
+                        🤝 Support Clothes Box Foundation
+                    </h3>
+
+                    <p>
+                        Want to help through clothing donations or
+                        support their social initiatives? Visit the
+                        official Clothes Box Foundation website to
+                        learn about their work and choose the best
+                        way to contribute.
+                    </p>
+
+                </div>
+
+
+                <!-- HELP STEPS -->
+
+                <div class="help-steps">
+
+                    <div class="help-step">
+
+                        <div class="help-step-icon">
+                            👕
+                        </div>
+
+                        <strong>
+                            Donate what you can
+                        </strong>
+
+                        <span>
+                            Give useful clothes a meaningful
+                            second life.
+                        </span>
+
+                    </div>
+
+
+                    <div class="help-step">
+
+                        <div class="help-step-icon">
+                            ♻️
+                        </div>
+
+                        <strong>
+                            Keep things in the loop
+                        </strong>
+
+                        <span>
+                            Reduce unnecessary waste through
+                            responsible reuse.
+                        </span>
+
+                    </div>
+
+
+                    <div class="help-step">
+
+                        <div class="help-step-icon">
+                            ❤️
+                        </div>
+
+                        <strong>
+                            Help someone
+                        </strong>
+
+                        <span>
+                            Your contribution can reach people
+                            who genuinely need support.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DONATE BUTTONS -->
+
+                <div class="help-donate-buttons">
+
+                    <a
+                        class="help-donate-primary"
+                        href="https://www.clothesboxfoundation.org/"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                        ❤️ Help / Donate Now →
+
+                    </a>
+
+
+                    <a
+                        class="help-donate-secondary"
+                        href="https://www.clothesboxfoundation.org/"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                        Visit Clothes Box Foundation
+
+                    </a>
+
+                </div>
+
+
+                <div class="help-note">
+
+                    You will be redirected to the official
+                    Clothes Box Foundation website to learn more
+                    and choose how you would like to help.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================== -->
+
+    <section class="cta">
+
+        <h2>
+            Your unused thing
+            could be someone's
+            perfect find.
+        </h2>
+
+        <p>
+            Don't let useful things sit unused.
+            Put them back into the loop.
+        </p>
+
+        <button
+            class="primary-btn"
+            onclick="sellItem()">
+            Start a new loop →
+        </button>
+
+    </section>
+
+
+    <!-- =========================
+         AUTH MODAL
+    ========================== -->
+
+    <div id="authModal" class="modal-overlay">
+
+        <div class="modal-box">
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeAuth()">
+                ×
+            </button>
+
+
+            <div id="loginFormBox">
+
+                <h2>
+                    Welcome back
+                </h2>
+
+                <p class="modal-subtitle">
+                    Log in to continue your LoopCycle journey.
+                </p>
+
+                <form onsubmit="loginUser(event)">
+
+                    <div class="modal-form-group">
+
+                        <label>Email</label>
+
+                        <input
+                            id="loginEmail"
+                            type="email"
+                            placeholder="you@example.com"
+                            required>
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label>Password</label>
+
+                        <input
+                            id="loginPassword"
+                            type="password"
+                            placeholder="••••••••"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn modal-full-btn"
+                        type="submit">
+                        Log in →
+                    </button>
+
+                </form>
+
+
+                <div class="modal-switch">
+                    New to LoopCycle?
+
+                    <button
+                        type="button"
+                        onclick="switchAuth('signup')">
+                        Create an account
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div
+                id="signupFormBox"
+                style="display:none">
+
+                <h2>
+                    Join LoopCycle
+                </h2>
+
+                <p class="modal-subtitle">
+                    Create an account and give useful things a second loop.
+                </p>
+
+                <form onsubmit="signupUser(event)">
+
+                    <div class="modal-form-group">
+
+                        <label>Full name</label>
+
+                        <input
+                            id="signupName"
+                            type="text"
+                            placeholder="Your name"
+                            required>
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label>Email</label>
+
+                        <input
+                            id="signupEmail"
+                            type="email"
+                            placeholder="you@example.com"
+                            required>
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label>Password</label>
+
+                        <input
+                            id="signupPassword"
+                            type="password"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn modal-full-btn"
+                        type="submit">
+                        Create account →
+                    </button>
+
+                </form>
+
+
+                <div class="modal-switch">
+                    Already a member?
+
+                    <button
+                        type="button"
+                        onclick="switchAuth('login')">
+                        Log in
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         LISTING MODAL
+    ========================== -->
+
+    <div id="listingModal" class="modal-overlay">
+
+        <div class="modal-box">
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeListing()">
+                ×
+            </button>
+
+            <h2>
+                List an item
+            </h2>
+
+            <p class="modal-subtitle">
+                Add your item so other LoopCycle members can find it.
+            </p>
+
+
+            <form
+                id="listingForm"
+                onsubmit="saveListing(event)">
+
+                <div class="listing-form-grid">
+
+                    <div class="modal-form-group full">
+
+                        <label>Item name</label>
+
+                        <input
+                            id="itemTitle"
+                            type="text"
+                            placeholder="e.g. Engineering Books"
+                            required>
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label>Category</label>
+
+                        <select
+                            id="itemCategory"
+                            required>
+
+                            <option value="">
+                                Choose category
+                            </option>
+
+                            <option value="Books">
+                                📚 Books
+                            </option>
+
+                            <option value="Electronics">
+                                💻 Electronics
+                            </option>
+
+                            <option value="Furniture">
+                                🪑 Furniture
+                            </option>
+
+                            <option value="Vehicles">
+                                🚲 Vehicles
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="modal-form-group full">
+
+                        <label>
+                            What do you want to do with this item?
+                        </label>
+
+                        <div class="listing-type-choices">
+
+                            <div class="listing-type-choice">
+
+                                <input
+                                    id="typeBuy"
+                                    name="itemType"
+                                    type="radio"
+                                    value="Buy"
+                                    checked>
+
+                                <label for="typeBuy">
+                                    🛒 Buy
+                                </label>
+
+                            </div>
+
+
+                            <div class="listing-type-choice">
+
+                                <input
+                                    id="typeRent"
+                                    name="itemType"
+                                    type="radio"
+                                    value="Rent">
+
+                                <label for="typeRent">
+                                    🏠 Rent
+                                </label>
+
+                            </div>
+
+
+                            <div class="listing-type-choice">
+
+                                <input
+                                    id="typeExchange"
+                                    name="itemType"
+                                    type="radio"
+                                    value="Exchange">
+
+                                <label for="typeExchange">
+                                    🔄 Exchange
+                                </label>
+
+                            </div>
+
+
+                            <div class="listing-type-choice">
+
+                                <input
+                                    id="typeBarter"
+                                    name="itemType"
+                                    type="radio"
+                                    value="Barter">
+
+                                <label for="typeBarter">
+                                    🤝 Barter
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Condition
+                        </label>
+
+                        <select id="itemCondition" required>
+
+                            <option>Like new</option>
+                            <option>Good</option>
+                            <option>Fair</option>
+                            <option>Used</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="modal-form-group">
+
+                        <label>
+                            Price (₹)
+                        </label>
+
+                        <input
+                            id="itemPrice"
+                            type="number"
+                            min="0"
+                            step="1"
+                            placeholder="350">
+
+                    </div>
+
+
+                    <div class="modal-form-group full">
+
+                        <label>
+                            Photo
+                        </label>
+
+                        <input
+                            id="itemPhoto"
+                            type="file"
+                            accept="image/*"
+                            onchange="previewListingPhoto(event)">
+
+                        <div
+                            class="photo-preview"
+                            id="photoPreview">
+                            Choose a photo of your item
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-form-group full">
+
+                        <label>
+                            Details
+                        </label>
+
+                        <input
+                            id="itemDetails"
+                            type="text"
+                            placeholder="e.g. 2nd owner, all pages intact">
+
+                    </div>
+
+
+                    <div class="modal-form-group full">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <textarea
+                            id="itemDescription"
+                            placeholder="Tell buyers about the item, condition, age, accessories, etc."
+                            required></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="primary-btn modal-full-btn"
+                    type="submit">
+                    Publish item →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ACTION MODAL
+    ========================== -->
+
+    <div id="actionModal" class="modal-overlay">
+
+        <div class="modal-box action-modal-content">
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeActionModal()">
+                ×
+            </button>
+
+            <div id="actionModalBody"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PROFILE MODAL
+    ========================== -->
+
+    <div id="profileModal" class="modal-overlay">
+
+        <div class="modal-box">
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeProfile()">
+                ×
+            </button>
+
+
+            <div class="profile-top">
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar">
+                    U
+                </div>
+
+                <div>
+
+                    <h3 id="profileName">
+                        Loop Member
+                    </h3>
+
+                    <div
+                        class="profile-email"
+                        id="profileEmail">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <h2>
+                My profile
+            </h2>
+
+            <p class="modal-subtitle">
+                Your LoopCycle account and activity.
+            </p>
+
+
+            <div class="profile-stats">
+
+                <div class="profile-stat">
+
+                    <strong id="profileItemCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Active items
+                    </span>
+
+                </div>
+
+
+                <div class="profile-stat">
+
+                    <strong id="profileTotalCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Total listings
+                    </span>
+
+                </div>
+
+
+                <div class="profile-stat">
+
+                    <strong>
+                        New
+                    </strong>
+
+                    <span>
+                        Trust status
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-listings">
+
+                <h3>
+                    My listings
+                </h3>
+
+                <div id="profileListings"></div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="primary-btn"
+                    type="button"
+                    onclick="closeProfile(); explore()">
+                    Explore marketplace
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    type="button"
+                    onclick="closeProfile(); openListing()">
+                    + List an item
+                </button>
+
+                <button
+                    class="logout-btn"
+                    type="button"
+                    onclick="logoutUser()">
+                    Log out
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div>
+            © 2026 LoopCycle
+        </div>
+
+        <div class="footer-links">
+
+            <a href="#">
+                About
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+            <a href="#">
+                Privacy
+            </a>
+
+            <a href="#">
+                Terms
+            </a>
+
+            <!-- NEW FOOTER DONATION LINK -->
+            <a
+                href="https://www.clothesboxfoundation.org/"
+                target="_blank"
+                rel="noopener noreferrer">
+                ❤️ Donate
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        /* =========================
+           GLOBAL DATA
+        ========================== */
+
+        const CATEGORY_ICONS = {
+            Books: "📚",
+            Electronics: "💻",
+            Furniture: "🪑",
+            Vehicles: "🚲"
+        };
+
+        let selectedCategory = "All";
+
+
+        /* =========================
+           LOCAL STORAGE
+        ========================== */
+
+        function getUser() {
+
+            try {
+                return JSON.parse(
+                    localStorage.getItem("loopcycleUser") || "null"
+                );
+            } catch (error) {
+                return null;
+            }
+
+        }
+
+
+        function getListings() {
+
+            try {
+
+                const listings = JSON.parse(
+                    localStorage.getItem("loopcycleListings") || "[]"
+                );
+
+                /*
+                 * Old listings that don't have a status
+                 * are treated as active.
+                 */
+                return listings.map(function(item) {
+
+                    return {
+                        ...item,
+                        status: item.status || "active"
+                    };
+
+                });
+
+            } catch (error) {
+
+                return [];
+
+            }
+
+        }
+
+
+        function saveListings(listings) {
+
+            localStorage.setItem(
+                "loopcycleListings",
+                JSON.stringify(listings)
+            );
+
+        }
+
+
+        /* =========================
+           AUTH
+        ========================== */
+
+        function openAuth(type) {
+
+            const modal = document.getElementById("authModal");
+
+            if (!modal) return;
+
+            modal.classList.add("active");
+
+            switchAuth(type);
+
+        }
+
+
+        function switchAuth(type) {
+
+            const loginBox =
+                document.getElementById("loginFormBox");
+
+            const signupBox =
+                document.getElementById("signupFormBox");
+
+            if (loginBox) {
+
+                loginBox.style.display =
+                    type === "login" ? "block" : "none";
+
+            }
+
+            if (signupBox) {
+
+                signupBox.style.display =
+                    type === "signup" ? "block" : "none";
+
+            }
+
+        }
+
+
+        function closeAuth() {
+
+            const modal =
+                document.getElementById("authModal");
+
+            if (modal) {
+                modal.classList.remove("active");
+            }
+
+        }
+
+
+        /* =========================
+           PROFILE
+        ========================== */
+
+        function openProfile() {
+
+            if (
+                localStorage.getItem("loopcycleLoggedIn") !== "true"
+            ) {
+
+                openAuth("login");
+                return;
+
+            }
+
+            const user = getUser();
+
+            if (!user) {
+
+                openAuth("login");
+                return;
+
+            }
+
+            const name =
+                user.name || "Loop Member";
+
+            const email =
+                user.email || "";
+
+
+            document.getElementById(
+                "profileName"
+            ).textContent = name;
+
+
+            document.getElementById(
+                "profileEmail"
+            ).textContent = email;
+
+
+            document.getElementById(
+                "profileAvatar"
+            ).textContent =
+                name.charAt(0).toUpperCase();
+
+
+            const mine =
+                getListings().filter(function(item) {
+
+                    return item.ownerEmail === email;
+
+                });
+
+
+            const activeMine =
+                mine.filter(function(item) {
+
+                    return item.status !== "unlisted";
+
+                });
+
+
+            document.getElementById(
+                "profileItemCount"
+            ).textContent = activeMine.length;
+
+
+            document.getElementById(
+                "profileTotalCount"
+            ).textContent = mine.length;
+
+
+            renderProfileListings();
+
+
+            document.getElementById(
+                "profileModal"
+            ).classList.add("active");
+
+        }
+
+
+        function closeProfile() {
+
+            const modal =
+                document.getElementById("profileModal");
+
+            if (modal) {
+                modal.classList.remove("active");
+            }
+
+        }
+
+
+        /* =========================
+           LISTING MODAL
+        ========================== */
+
+        function resetListingForm() {
+
+            const form =
+                document.getElementById("listingForm");
+
+            if (!form) return;
+
+            form.reset();
+
+            delete form.dataset.editingId;
+
+
+            const submitBtn =
+                document.querySelector(
+                    "#listingForm .modal-full-btn"
+                );
+
+            if (submitBtn) {
+                submitBtn.textContent =
+                    "Publish item →";
+            }
+
+
+            const modalTitle =
+                document.querySelector(
+                    "#listingModal h2"
+                );
+
+            if (modalTitle) {
+                modalTitle.textContent =
+                    "List an item";
+            }
+
+
+            const preview =
+                document.getElementById("photoPreview");
+
+            if (preview) {
+                preview.innerHTML =
+                    "Choose a photo of your item";
+            }
+
+
+            const buyRadio =
+                document.getElementById("typeBuy");
+
+            if (buyRadio) {
+                buyRadio.checked = true;
+            }
+
+        }
+
+
+        function openListing() {
+
+            if (
+                localStorage.getItem("loopcycleLoggedIn") !== "true"
+            ) {
+
+                openAuth("login");
+                return;
+
+            }
+
+            const modal =
+                document.getElementById("listingModal");
+
+            if (!modal) return;
+
+
+            /*
+             * Only reset when opening a fresh listing.
+             * If editListing() has already populated the form,
+             * it will set editingId after this function.
+             */
+            const form =
+                document.getElementById("listingForm");
+
+            if (
+                form &&
+                !form.dataset.editingId
+            ) {
+                resetListingForm();
+            }
+
+
+            modal.classList.add("active");
+
+        }
+
+
+        function closeListing() {
+
+            const modal =
+                document.getElementById("listingModal");
+
+            if (modal) {
+                modal.classList.remove("active");
+            }
+
+        }
+
+
+        function previewListingPhoto(event) {
+
+            const file =
+                event.target.files &&
+                event.target.files[0];
+
+            const preview =
+                document.getElementById("photoPreview");
+
+            if (!preview) return;
+
+
+            if (!file) {
+
+                preview.innerHTML =
+                    "Choose a photo of your item";
+
+                return;
+
+            }
+
+
+            const reader = new FileReader();
+
+
+            reader.onload = function(e) {
+
+                preview.innerHTML =
+                    '<img src="' +
+                    e.target.result +
+                    '" alt="Item preview">';
+
+            };
+
+
+            reader.readAsDataURL(file);
+
+        }
+
+
+        /* =========================
+           SAVE / EDIT LISTING
+        ========================== */
+
+        function saveListing(event) {
+
+            event.preventDefault();
+
+
+            const user = getUser();
+
+            if (!user) {
+
+                closeListing();
+                openAuth("login");
+                return;
+
+            }
+
+
+            const form =
+                document.getElementById("listingForm");
+
+            const editingId =
+                form.dataset.editingId || "";
+
+
+            const title =
+                document.getElementById(
+                    "itemTitle"
+                ).value.trim();
+
+
+            const categoryName =
+                document.getElementById(
+                    "itemCategory"
+                ).value;
+
+
+            const typeEl =
+                document.querySelector(
+                    'input[name="itemType"]:checked'
+                );
+
+
+            const type =
+                typeEl ? typeEl.value : "Buy";
+
+
+            const condition =
+                document.getElementById(
+                    "itemCondition"
+                ).value;
+
+
+            const price =
+                document.getElementById(
+                    "itemPrice"
+                ).value.trim();
+
+
+            const details =
+                document.getElementById(
+                    "itemDetails"
+                ).value.trim();
+
+
+            const description =
+                document.getElementById(
+                    "itemDescription"
+                ).value.trim();
+
+
+            const photoInput =
+                document.getElementById(
+                    "itemPhoto"
+                );
+
+
+            const file =
+                photoInput &&
+                photoInput.files
+                    ? photoInput.files[0]
+                    : null;
+
+
+            if (
+                !title ||
+                !categoryName ||
+                !description
+            ) {
+
+                alert(
+                    "Please add item name, category and description."
+                );
+
+                return;
+
+            }
+
+
+            function finishSave(photoData) {
+
+                const listings =
+                    getListings();
+
+
+                /* =========================
+                   EDIT EXISTING LISTING
+                ========================== */
+
+                if (editingId) {
+
+                    const index =
+                        listings.findIndex(
+                            function(item) {
+
+                                return (
+                                    String(item.id) ===
+                                    String(editingId) &&
+                                    item.ownerEmail ===
+                                    user.email
+                                );
+
+                            }
+                        );
+
+
+                    if (index === -1) {
+
+                        alert(
+                            "Listing not found."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const oldPhoto =
+                        listings[index].photo || "";
+
+
+                    /*
+                     * IMPORTANT:
+                     * Keep current status.
+                     *
+                     * If an item was unlisted and edited,
+                     * it stays unlisted until user presses Enlist.
+                     */
+                    const currentStatus =
+                        listings[index].status ||
+                        "active";
+
+
+                    listings[index] = {
+
+                        ...listings[index],
+
+                        title: title,
+
+                        category: categoryName,
+
+                        type: type,
+
+                        condition: condition,
+
+                        price: price,
+
+                        details: details,
+
+                        description: description,
+
+                        photo:
+                            photoData || oldPhoto,
+
+                        status:
+                            currentStatus,
+
+                        updatedAt:
+                            new Date().toLocaleDateString()
+
+                    };
+
+
+                    saveListings(listings);
+
+
+                    alert(
+                        "Your listing has been updated!"
+                    );
+
+                }
+
+
+                /* =========================
+                   CREATE NEW LISTING
+                ========================== */
+
+                else {
+
+                    listings.unshift({
+
+                        id: Date.now(),
+
+                        title: title,
+
+                        category: categoryName,
+
+                        type: type,
+
+                        condition: condition,
+
+                        price: price,
+
+                        details: details,
+
+                        description: description,
+
+                        photo:
+                            photoData || "",
+
+                        ownerName:
+                            user.name ||
+                            "Loop Member",
+
+                        ownerEmail:
+                            user.email ||
+                            "",
+
+                        status:
+                            "active",
+
+                        createdAt:
+                            new Date().toLocaleDateString()
+
+                    });
+
+
+                    saveListings(listings);
+
+
+                    alert(
+                        "Your item has been listed successfully!"
+                    );
+
+                }
+
+
+                closeListing();
+
+
+                resetListingForm();
+
+
+                /*
+                 * If the current marketplace is showing
+                 * search results, refresh that search.
+                 */
+                const searchInput =
+                    document.getElementById(
+                        "searchInput"
+                    );
+
+
+                if (
+                    searchInput &&
+                    searchInput.value.trim()
+                ) {
+
+                    searchItem();
+
+                } else {
+
+                    renderListings(
+                        selectedCategory
+                    );
+
+                }
+
+
+                renderProfileListings();
+
+                updateNav();
+
+            }
+
+
+            if (file) {
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function(e) {
+
+                        finishSave(
+                            e.target.result
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            } else {
+
+                finishSave("");
+
+            }
+
+        }
+
+
+        /* =========================
+           PROFILE LISTINGS
+        ========================== */
+
+        function renderProfileListings() {
+
+            const box =
+                document.getElementById(
+                    "profileListings"
+                );
+
+            const user =
+                getUser();
+
+
+            if (!box || !user) return;
+
+
+            const mine =
+                getListings().filter(
+                    function(item) {
+
+                        return (
+                            item.ownerEmail ===
+                            user.email
+                        );
+
+                    }
+                );
+
+
+            if (!mine.length) {
+
+                box.innerHTML =
+                    '<div class="profile-empty">' +
+                    'No items listed yet. Click "+ List an item" to add one.' +
+                    '</div>';
+
+                return;
+
+            }
+
+
+            box.innerHTML =
+                mine.map(function(item) {
+
+                    const icon =
+                        CATEGORY_ICONS[
+                            item.category
+                        ] || "♻️";
+
+
+                    const thumb =
+                        item.photo
+
+                            ? '<img src="' +
+                              item.photo +
+                              '" alt="' +
+                              escapeHtml(item.title) +
+                              '">'
+
+                            : icon;
+
+
+                    const isUnlisted =
+                        item.status === "unlisted";
+
+
+                    const statusLabel =
+                        isUnlisted
+
+                            ? '<span class="unlisted-label">UNLISTED</span>'
+
+                            : "";
+
+
+                    const toggleButton =
+                        isUnlisted
+
+                            ? '<button ' +
+                              'class="profile-mini-btn enlist" ' +
+                              'type="button" ' +
+                              'onclick="toggleListingStatus(' +
+                              item.id +
+                              ')">' +
+                              'Enlist' +
+                              '</button>'
+
+                            : '<button ' +
+                              'class="profile-mini-btn danger" ' +
+                              'type="button" ' +
+                              'onclick="toggleListingStatus(' +
+                              item.id +
+                              ')">' +
+                              'Unlist' +
+                              '</button>';
+
+
+                    return (
+
+                        '<div class="profile-list-item">' +
+
+                            '<div class="profile-list-thumb">' +
+                                thumb +
+                            '</div>' +
+
+                            '<div class="profile-list-info">' +
+
+                                '<strong>' +
+                                    escapeHtml(item.title) +
+                                    statusLabel +
+                                '</strong>' +
+
+                                '<span>' +
+                                    escapeHtml(item.category) +
+                                    ' · ' +
+                                    escapeHtml(item.type) +
+                                '</span>' +
+
+                            '</div>' +
+
+                            '<div class="profile-list-actions">' +
+
+                                '<button ' +
+                                'class="profile-mini-btn" ' +
+                                'type="button" ' +
+                                'onclick="editListing(' +
+                                item.id +
+                                ')">' +
+                                'Edit' +
+                                '</button>' +
+
+                                toggleButton +
+
+                            '</div>' +
+
+                        '</div>'
+
+                    );
+
+                }).join("");
+
+        }
+
+
+        /* =========================
+           EDIT LISTING
+        ========================== */
+
+        function editListing(id) {
+
+            const item =
+                getListingById(id);
+
+            const user =
+                getUser();
+
+
+            if (
+                !item ||
+                !user ||
+                item.ownerEmail !== user.email
+            ) {
+
+                alert(
+                    "You can only edit your own listing."
+                );
+
+                return;
+
+            }
+
+
+            closeProfile();
+
+
+            const form =
+                document.getElementById(
+                    "listingForm"
+                );
+
+
+            document.getElementById(
+                "itemTitle"
+            ).value =
+                item.title || "";
+
+
+            document.getElementById(
+                "itemCategory"
+            ).value =
+                item.category || "";
+
+
+            document.getElementById(
+                "itemCondition"
+            ).value =
+                item.condition || "Like new";
+
+
+            document.getElementById(
+                "itemPrice"
+            ).value =
+                item.price || "";
+
+
+            document.getElementById(
+                "itemDetails"
+            ).value =
+                item.details || "";
+
+
+            document.getElementById(
+                "itemDescription"
+            ).value =
+                item.description || "";
+
+
+            document.querySelectorAll(
+                'input[name="itemType"]'
+            ).forEach(function(radio) {
+
+                radio.checked =
+                    radio.value === item.type;
+
+            });
+
+
+            form.dataset.editingId =
+                item.id;
+
+
+            const title =
+                document.querySelector(
+                    "#listingModal h2"
+                );
+
+
+            if (title) {
+                title.textContent =
+                    "Edit your item";
+            }
+
+
+            const submitBtn =
+                document.querySelector(
+                    "#listingForm .modal-full-btn"
+                );
+
+
+            if (submitBtn) {
+                submitBtn.textContent =
+                    "Save changes →";
+            }
+
+
+            const preview =
+                document.getElementById(
+                    "photoPreview"
+                );
+
+
+            if (preview) {
+
+                preview.innerHTML =
+                    item.photo
+
+                        ? '<img src="' +
+                          item.photo +
+                          '" alt="Current item photo">'
+
+                        : "No photo added — choose a new photo if you want";
+
+            }
+
+
+            document.getElementById(
+                "listingModal"
+            ).classList.add("active");
+
+        }
+
+
+        /* =========================
+           UNLIST / ENLIST TOGGLE
+        ========================== */
+
+        function toggleListingStatus(id) {
+
+            const item =
+                getListingById(id);
+
+            const user =
+                getUser();
+
+
+            if (
+                !item ||
+                !user ||
+                item.ownerEmail !== user.email
+            ) {
+
+                alert(
+                    "You can only manage your own listing."
+                );
+
+                return;
+
+            }
+
+
+            const isCurrentlyUnlisted =
+                item.status === "unlisted";
+
+
+            const action =
+                isCurrentlyUnlisted
+                    ? "enlist"
+                    : "unlist";
+
+
+            const question =
+                isCurrentlyUnlisted
+
+                    ? 'Enlist "' +
+                      item.title +
+                      '" back into the marketplace?'
+
+                    : 'Unlist "' +
+                      item.title +
+                      '" from the marketplace?';
+
+
+            if (!confirm(question)) {
+                return;
+            }
+
+
+            const listings =
+                getListings();
+
+
+            const index =
+                listings.findIndex(
+                    function(listing) {
+
+                        return (
+                            String(listing.id) ===
+                            String(id) &&
+                            listing.ownerEmail ===
+                            user.email
+                        );
+
+                    }
+                );
+
+
+            if (index === -1) {
+
+                alert(
+                    "Listing not found."
+                );
+
+                return;
+
+            }
+
+
+            listings[index].status =
+                isCurrentlyUnlisted
+                    ? "active"
+                    : "unlisted";
+
+
+            listings[index].updatedAt =
+                new Date().toLocaleDateString();
+
+
+            saveListings(listings);
+
+
+            /*
+             * Refresh marketplace.
+             * If search is active, keep search results.
+             */
+            const searchInput =
+                document.getElementById(
+                    "searchInput"
+                );
+
+
+            if (
+                searchInput &&
+                searchInput.value.trim()
+            ) {
+
+                searchItem();
+
+            } else {
+
+                renderListings(
+                    selectedCategory
+                );
+
+            }
+
+
+            renderProfileListings();
+
+
+            /*
+             * Refresh profile counters
+             * if profile is open.
+             */
+            const activeCount =
+                listings.filter(
+                    function(listing) {
+
+                        return (
+                            listing.ownerEmail ===
+                            user.email &&
+                            listing.status !==
+                            "unlisted"
+                        );
+
+                    }
+                ).length;
+
+
+            const totalCount =
+                listings.filter(
+                    function(listing) {
+
+                        return (
+                            listing.ownerEmail ===
+                            user.email
+                        );
+
+                    }
+                ).length;
+
+
+            const countEl =
+                document.getElementById(
+                    "profileItemCount"
+                );
+
+
+            const totalEl =
+                document.getElementById(
+                    "profileTotalCount"
+                );
+
+
+            if (countEl) {
+                countEl.textContent =
+                    activeCount;
+            }
+
+
+            if (totalEl) {
+                totalEl.textContent =
+                    totalCount;
+            }
+
+
+            alert(
+                isCurrentlyUnlisted
+                    ? "Item has been enlisted again."
+                    : "Item has been unlisted."
+            );
+
+        }
+
+
+        /*
+         * Keep old function name working too.
+         * Any old onclick="unlistItem(...)" will now
+         * use the same toggle system.
+         */
+        function unlistItem(id) {
+
+            toggleListingStatus(id);
+
+        }
+
+
+        /* =========================
+           CATEGORY
+        ========================== */
+
+        function category(name) {
+
+            selectedCategory =
+                name;
+
+
+            /*
+             * Clear search when category is selected.
+             */
+            const searchInput =
+                document.getElementById(
+                    "searchInput"
+                );
+
+
+            if (searchInput) {
+                searchInput.value = "";
+            }
+
+
+            renderListings(name);
+
+
+            document.querySelectorAll(
+                ".category"
+            ).forEach(function(card) {
+
+                card.classList.remove(
+                    "active"
+                );
+
+
+                const heading =
+                    card.querySelector("h3");
+
+
+                if (
+                    heading &&
+                    heading.textContent.trim() ===
+                    name
+                ) {
+
+                    card.classList.add(
+                        "active"
+                    );
+
+                }
+
+            });
+
+
+            const results =
+                document.getElementById(
+                    "listingResults"
+                );
+
+
+            if (results) {
+
+                results.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+
+        }
+
+
+        /* =========================
+           LISTING CARD
+        ========================== */
+
+        function makeListingCard(item) {
+
+            const icon =
+                CATEGORY_ICONS[
+                    item.category
+                ] || "♻️";
+
+
+            const photo =
+                item.photo
+
+                    ? '<img src="' +
+                      item.photo +
+                      '" alt="' +
+                      escapeHtml(item.title) +
+                      '">'
+
+                    : icon;
+
+
+            const priceText =
+                item.price
+
+                    ? "₹" +
+                      escapeHtml(
+                          item.price
+                      )
+
+                    : item.type === "Rent"
+
+                        ? "Rental"
+
+                        : "Contact for price";
+
+
+            return (
+
+                '<article class="listing-card">' +
+
+                    '<div class="listing-photo">' +
+                        photo +
+                    '</div>' +
+
+                    '<div class="listing-body">' +
+
+                        '<span class="listing-badge">' +
+                            escapeHtml(item.type) +
+                        '</span>' +
+
+                        '<h4>' +
+                            escapeHtml(item.title) +
+                        '</h4>' +
+
+                        '<p>' +
+                            escapeHtml(
+                                item.description
+                            ) +
+                        '</p>' +
+
+                        (
+                            item.details
+
+                                ? '<p>' +
+                                  '<strong>Details:</strong> ' +
+                                  escapeHtml(
+                                      item.details
+                                  ) +
+                                  '</p>'
+
+                                : ''
+                        ) +
+
+                        '<div class="listing-price">' +
+                            priceText +
+                        '</div>' +
+
+                        '<div class="listing-meta">' +
+
+                            '<span>' +
+                                escapeHtml(
+                                    item.condition
+                                ) +
+                            '</span>' +
+
+                            '<span>by ' +
+                                escapeHtml(
+                                    item.ownerName ||
+                                    "Loop Member"
+                                ) +
+                            '</span>' +
+
+                        '</div>' +
+
+                        '<div class="listing-actions">' +
+
+                            '<button ' +
+                                'class="listing-action-btn" ' +
+                                'type="button" ' +
+                                'onclick="contactListing(' +
+                                item.id +
+                                ')">' +
+
+                                actionLabel(
+                                    item.type
+                                ) +
+
+                            '</button>' +
+
+
+                            '<button ' +
+                                'class="listing-action-btn secondary" ' +
+                                'type="button" ' +
+                                'onclick="viewListing(' +
+                                item.id +
+                                ')">' +
+
+                                'View details' +
+
+                            '</button>' +
+
+                        '</div>' +
+
+                    '</div>' +
+
+                '</article>'
+
+            );
+
+        }
+
+
+        /* =========================
+           MARKETPLACE RENDER
+        ========================== */
+
+        function renderListings(categoryName) {
+
+            const grid =
+                document.getElementById(
+                    "listingGrid"
+                );
+
+
+            const title =
+                document.getElementById(
+                    "listingTitle"
+                );
+
+
+            const count =
+                document.getElementById(
+                    "listingCount"
+                );
+
+
+            if (
+                !grid ||
+                !title ||
+                !count
+            ) {
+                return;
+            }
+
+
+            /*
+             * IMPORTANT:
+             * Only active listings appear in marketplace.
+             *
+             * Old listings without status are considered active
+             * by getListings().
+             */
+            const allActive =
+                getListings().filter(
+                    function(item) {
+
+                        return (
+                            item.status !==
+                            "unlisted"
+                        );
+
+                    }
+                );
+
+
+            const filtered =
+                categoryName === "All"
+
+                    ? allActive
+
+                    : allActive.filter(
+                        function(item) {
+
+                            return (
+                                item.category ===
+                                categoryName
+                            );
+
+                        }
+                    );
+
+
+            title.textContent =
+                categoryName === "All"
+
+                    ? "All marketplace items"
+
+                    : categoryName +
+                      " items";
+
+
+            count.textContent =
+                filtered.length +
+                (
+                    filtered.length === 1
+                        ? " item"
+                        : " items"
+                );
+
+
+            if (!filtered.length) {
+
+                grid.innerHTML =
+                    '<div class="empty-listings" style="grid-column:1/-1">' +
+
+                        '<strong>' +
+                            'No items listed here yet.' +
+                        '</strong>' +
+
+                        '<br>' +
+
+                        '<span>' +
+                            'Be the first person to give something a second loop.' +
+                        '</span>' +
+
+                    '</div>';
+
+                return;
+
+            }
+
+
+            grid.innerHTML =
+                filtered
+                    .map(makeListingCard)
+                    .join("");
+
+        }
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================== */
+
+        function escapeHtml(value) {
+
+            return String(value || "")
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        /* =========================
+           GET LISTING
+        ========================== */
+
+        function getListingById(id) {
+
+            return getListings().find(
+                function(listing) {
+
+                    return (
+                        String(listing.id) ===
+                        String(id)
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           LISTING THUMB
+        ========================== */
+
+        function listingThumb(item) {
+
+            const icon =
+                CATEGORY_ICONS[
+                    item.category
+                ] || "♻️";
+
+
+            return item.photo
+
+                ? '<img src="' +
+                  item.photo +
+                  '" alt="' +
+                  escapeHtml(item.title) +
+                  '">'
+
+                : icon;
+
+        }
+
+
+        /* =========================
+           ACTION LABEL
+        ========================== */
+
+        function actionLabel(type) {
+
+            if (type === "Buy") {
+                return "Buy now";
+            }
+
+            if (type === "Rent") {
+                return "Rent now";
+            }
+
+            if (type === "Exchange") {
+                return "Exchange now";
+            }
+
+            return "Barter now";
+
+        }
+
+
+        /* =========================
+           ACTION MODAL
+        ========================== */
+
+        function openActionModal() {
+
+            const modal =
+                document.getElementById(
+                    "actionModal"
+                );
+
+
+            if (modal) {
+                modal.classList.add("active");
+            }
+
+        }
+
+
+        function closeActionModal() {
+
+            const modal =
+                document.getElementById(
+                    "actionModal"
+                );
+
+
+            if (modal) {
+                modal.classList.remove("active");
+            }
+
+        }
+
+
+        /* =========================
+           VIEW LISTING
+        ========================== */
+
+        function viewListing(id) {
+
+            const item =
+                getListingById(id);
+
+
+            if (
+                !item ||
+                item.status === "unlisted"
+            ) {
+
+                alert(
+                    "This item is no longer available."
+                );
+
+                return;
+
+            }
+
+
+            const price =
+                item.price
+                    ? "₹" + item.price
+                    : "Contact for price";
+
+
+            document.getElementById(
+                "actionModalBody"
+            ).innerHTML =
+
+                '<div class="action-item-head">' +
+
+                    '<div class="action-item-thumb">' +
+                        listingThumb(item) +
+                    '</div>' +
+
+                    '<div>' +
+
+                        '<h3>' +
+                            escapeHtml(
+                                item.title
+                            ) +
+                        '</h3>' +
+
+                        '<p>' +
+                            escapeHtml(
+                                item.category
+                            ) +
+                            ' · ' +
+                            escapeHtml(
+                                item.type
+                            ) +
+                        '</p>' +
+
+                    '</div>' +
+
+                '</div>' +
+
+
+                '<div class="action-details">' +
+
+                    '<p>' +
+                        '<strong>Description:</strong> ' +
+                        escapeHtml(
+                            item.description
+                        ) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Details:</strong> ' +
+                        escapeHtml(
+                            item.details ||
+                            "Not provided"
+                        ) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Condition:</strong> ' +
+                        escapeHtml(
+                            item.condition
+                        ) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Price:</strong> ' +
+                        escapeHtml(price) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Listed by:</strong> ' +
+                        escapeHtml(
+                            item.ownerName ||
+                            "Loop Member"
+                        ) +
+                    '</p>' +
+
+                '</div>' +
+
+
+                '<button ' +
+                    'class="primary-btn action-confirm" ' +
+                    'type="button" ' +
+                    'onclick="contactListing(' +
+                    item.id +
+                    ')">' +
+
+                    actionLabel(
+                        item.type
+                    ) +
+
+                '</button>';
+
+
+            openActionModal();
+
+        }
+
+
+        /* =========================
+           CONTACT / BUY / RENT /
+           EXCHANGE / BARTER
+        ========================== */
+
+        function contactListing(id) {
+
+            const item =
+                getListingById(id);
+
+
+            if (
+                !item ||
+                item.status === "unlisted"
+            ) {
+
+                alert(
+                    "This item is no longer available."
+                );
+
+                return;
+
+            }
+
+
+            const loggedIn =
+                localStorage.getItem(
+                    "loopcycleLoggedIn"
+                ) === "true";
+
+
+            if (!loggedIn) {
+
+                closeActionModal();
+
+                openAuth("login");
+
+                return;
+
+            }
+
+
+            const currentUser =
+                getUser();
+
+
+            if (
+                currentUser &&
+                currentUser.email ===
+                item.ownerEmail
+            ) {
+
+                alert(
+                    "You cannot " +
+                    item.type.toLowerCase() +
+                    " your own listing."
+                );
+
+                return;
+
+            }
+
+
+            const actionWord =
+                item.type === "Buy"
+
+                    ? "buy"
+
+                    : item.type === "Rent"
+
+                        ? "rent"
+
+                        : item.type === "Exchange"
+
+                            ? "exchange"
+
+                            : "barter";
+
+
+            const price =
+                item.price
+                    ? "₹" + item.price
+                    : "Price to be discussed";
+
+
+            document.getElementById(
+                "actionModalBody"
+            ).innerHTML =
+
+                '<div class="success-box">' +
+
+                    '<div class="success-icon">' +
+                        '🤝' +
+                    '</div>' +
+
+                    '<h3>' +
+                        'Request ' +
+                        escapeHtml(
+                            actionWord
+                        ) +
+                    '</h3>' +
+
+                    '<p>' +
+
+                        'You are requesting to ' +
+
+                        '<strong>' +
+                            escapeHtml(
+                                actionWord
+                            ) +
+                        '</strong> ' +
+
+                        '<strong>' +
+                            escapeHtml(
+                                item.title
+                            ) +
+                        '</strong>.' +
+
+                    '</p>' +
+
+                '</div>' +
+
+
+                '<div class="action-details">' +
+
+                    '<p>' +
+                        '<strong>Owner:</strong> ' +
+                        escapeHtml(
+                            item.ownerName ||
+                            "Loop Member"
+                        ) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Email:</strong> ' +
+                        escapeHtml(
+                            item.ownerEmail
+                        ) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Price:</strong> ' +
+                        escapeHtml(price) +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Category:</strong> ' +
+                        escapeHtml(
+                            item.category
+                        ) +
+                    '</p>' +
+
+                '</div>' +
+
+
+                '<button ' +
+                    'class="primary-btn action-confirm" ' +
+                    'type="button" ' +
+                    'onclick="confirmListingRequest(' +
+                    item.id +
+                    ', \'' +
+                    actionWord.replace(
+                        /'/g,
+                        "\\'"
+                    ) +
+                    '\')">' +
+
+                    'Confirm ' +
+                    escapeHtml(
+                        actionWord
+                    ) +
+
+                '</button>' +
+
+
+                '<p class="action-note">' +
+
+                    'This demo records your request locally. ' +
+                    'A real marketplace backend can send this request to the seller.' +
+
+                '</p>';
+
+
+            openActionModal();
+
+        }
+
+
+        /* =========================
+           CONFIRM REQUEST
+        ========================== */
+
+        function confirmListingRequest(
+            id,
+            actionWord
+        ) {
+
+            const item =
+                getListingById(id);
+
+
+            if (
+                !item ||
+                item.status === "unlisted"
+            ) {
+
+                alert(
+                    "This item is no longer available."
+                );
+
+                closeActionModal();
+
+                return;
+
+            }
+
+
+            const currentUser =
+                getUser();
+
+
+            let requests = [];
+
+
+            try {
+
+                requests =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "loopcycleRequests"
+                        ) || "[]"
+                    );
+
+            } catch (error) {
+
+                requests = [];
+
+            }
+
+
+            requests.unshift({
+
+                id: Date.now(),
+
+                listingId: item.id,
+
+                action: actionWord,
+
+                itemTitle: item.title,
+
+                buyerName:
+                    currentUser
+                        ? currentUser.name
+                        : "Loop Member",
+
+                buyerEmail:
+                    currentUser
+                        ? currentUser.email
+                        : "",
+
+                sellerEmail:
+                    item.ownerEmail,
+
+                createdAt:
+                    new Date().toLocaleString()
+
+            });
+
+
+            localStorage.setItem(
+                "loopcycleRequests",
+                JSON.stringify(requests)
+            );
+
+
+            document.getElementById(
+                "actionModalBody"
+            ).innerHTML =
+
+                '<div class="success-box">' +
+
+                    '<div class="success-icon">' +
+                        '✅' +
+                    '</div>' +
+
+                    '<h3>' +
+                        'Request sent!' +
+                    '</h3>' +
+
+                    '<p>' +
+
+                        'Your ' +
+
+                        '<strong>' +
+                            escapeHtml(
+                                actionWord
+                            ) +
+                        '</strong> ' +
+
+                        'request for ' +
+
+                        '<strong>' +
+                            escapeHtml(
+                                item.title
+                            ) +
+                        '</strong> ' +
+
+                        'has been recorded.' +
+
+                    '</p>' +
+
+                    '<button ' +
+                        'class="primary-btn action-confirm" ' +
+                        'type="button" ' +
+                        'onclick="closeActionModal()">' +
+
+                        'Done' +
+
+                    '</button>' +
+
+                '</div>';
+
+        }
+
+
+        /* =========================
+           SIGN UP
+        ========================== */
+
+        function signupUser(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "signupName"
+                ).value.trim();
+
+
+            const email =
+                document.getElementById(
+                    "signupEmail"
+                ).value.trim();
+
+
+            const password =
+                document.getElementById(
+                    "signupPassword"
+                ).value;
+
+
+            if (
+                !name ||
+                !email ||
+                !password
+            ) {
+
+                alert(
+                    "Please fill in all fields."
+                );
+
+                return;
+
+            }
+
+
+            localStorage.setItem(
+                "loopcycleUser",
+                JSON.stringify({
+
+                    name: name,
+
+                    email: email,
+
+                    password: password
+
+                })
+            );
+
+
+            localStorage.setItem(
+                "loopcycleLoggedIn",
+                "true"
+            );
+
+
+            updateNav();
+
+            closeAuth();
+
+
+            alert(
+                "Account created successfully! Welcome to LoopCycle."
+            );
+
+        }
+
+
+        /* =========================
+           LOGIN
+        ========================== */
+
+        function loginUser(event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document.getElementById(
+                    "loginEmail"
+                ).value.trim();
+
+
+            const password =
+                document.getElementById(
+                    "loginPassword"
+                ).value;
+
+
+            const saved =
+                getUser();
+
+
+            if (
+                !saved ||
+                saved.email !== email ||
+                saved.password !== password
+            ) {
+
+                alert(
+                    "Invalid email or password."
+                );
+
+                return;
+
+            }
+
+
+            localStorage.setItem(
+                "loopcycleLoggedIn",
+                "true"
+            );
+
+
+            updateNav();
+
+            closeAuth();
+
+
+            alert(
+                "Login successful! Welcome back."
+            );
+
+        }
+
+
+        /* =========================
+           LOGOUT
+        ========================== */
+
+        function logoutUser() {
+
+            localStorage.setItem(
+                "loopcycleLoggedIn",
+                "false"
+            );
+
+
+            closeProfile();
+
+            updateNav();
+
+        }
+
+
+        /* =========================
+           NAV UPDATE
+        ========================== */
+
+        function updateNav() {
+
+            const loggedIn =
+                localStorage.getItem(
+                    "loopcycleLoggedIn"
+                ) === "true";
+
+
+            const loginBtn =
+                document.querySelector(
+                    ".login"
+                );
+
+
+            /*
+             * Explicit ID instead of .signup
+             * because Profile also has .signup class.
+             */
+            const signupBtn =
+                document.getElementById(
+                    "signupNav"
+                );
+
+
+            const accountNav =
+                document.getElementById(
+                    "accountNav"
+                );
+
+
+            if (loginBtn) {
+
+                loginBtn.style.display =
+                    loggedIn
+                        ? "none"
+                        : "";
+
+            }
+
+
+            if (signupBtn) {
+
+                signupBtn.style.display =
+                    loggedIn
+                        ? "none"
+                        : "";
+
+            }
+
+
+            if (accountNav) {
+
+                accountNav.style.display =
+                    loggedIn
+                        ? "inline-block"
+                        : "none";
+
+            }
+
+        }
+
+
+        /* =========================
+           EXPLORE
+        ========================== */
+
+        function explore() {
+
+            const section =
+                document.getElementById(
+                    "explore"
+                );
+
+
+            if (section) {
+
+                section.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
+
+            selectedCategory =
+                "All";
+
+
+            const searchInput =
+                document.getElementById(
+                    "searchInput"
+                );
+
+
+            if (searchInput) {
+                searchInput.value = "";
+            }
+
+
+            document.querySelectorAll(
+                ".category"
+            ).forEach(function(card) {
+
+                card.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            renderListings("All");
+
+        }
+
+
+        /* =========================
+           SELL ITEM
+        ========================== */
+
+        function sellItem() {
+
+            openListing();
+
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        function searchItem() {
+
+            const input =
+                document.getElementById(
+                    "searchInput"
+                );
+
+
+            const rawValue =
+                input
+                    ? input.value.trim()
+                    : "";
+
+
+            const value =
+                rawValue.toLowerCase();
+
+
+            const grid =
+                document.getElementById(
+                    "listingGrid"
+                );
+
+
+            const title =
+                document.getElementById(
+                    "listingTitle"
+                );
+
+
+            const count =
+                document.getElementById(
+                    "listingCount"
+                );
+
+
+            const resultsSection =
+                document.getElementById(
+                    "listingResults"
+                );
+
+
+            if (
+                !grid ||
+                !title ||
+                !count
+            ) {
+                return;
+            }
+
+
+            /*
+             * Empty search:
+             * show all active listings.
+             */
+            if (!value) {
+
+                selectedCategory =
+                    "All";
+
+
+                document.querySelectorAll(
+                    ".category"
+                ).forEach(function(card) {
+
+                    card.classList.remove(
+                        "active"
+                    );
+
+                });
+
+
+                renderListings("All");
+
+                return;
+
+            }
+
+
+            /*
+             * Search ALL active marketplace listings.
+             */
+            const matches =
+                getListings().filter(
+                    function(item) {
+
+                        /*
+                         * Unlisted products must NOT
+                         * appear in search.
+                         */
+                        if (
+                            item.status ===
+                            "unlisted"
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        /*
+                         * Search through all useful
+                         * product information.
+                         */
+                        const searchableText = [
+
+                            item.title || "",
+
+                            item.category || "",
+
+                            item.type || "",
+
+                            item.condition || "",
+
+                            item.details || "",
+
+                            item.description || "",
+
+                            item.price || "",
+
+                            item.ownerName || "",
+
+                            item.ownerEmail || ""
+
+                        ]
+                            .join(" ")
+                            .toLowerCase();
+
+
+                        return searchableText.includes(
+                            value
+                        );
+
+                    }
+                );
+
+
+            selectedCategory =
+                "All";
+
+
+            document.querySelectorAll(
+                ".category"
+            ).forEach(function(card) {
+
+                card.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            title.textContent =
+                'Search results for "' +
+                rawValue +
+                '"';
+
+
+            count.textContent =
+                matches.length +
+                (
+                    matches.length === 1
+                        ? " item"
+                        : " items"
+                );
+
+
+            if (matches.length) {
+
+                grid.innerHTML =
+                    matches
+                        .map(makeListingCard)
+                        .join("");
+
+            } else {
+
+                grid.innerHTML =
+
+                    '<div class="empty-listings" style="grid-column:1/-1">' +
+
+                        '<strong>' +
+                            '🔍 No matching items found.' +
+                        '</strong>' +
+
+                        '<br>' +
+
+                        '<span>' +
+                            'Try another product name, category or keyword.' +
+                        '</span>' +
+
+                    '</div>';
+
+            }
+
+
+            if (resultsSection) {
+
+                resultsSection.scrollIntoView({
+
+                    behavior: "smooth",
+
+                    block: "start"
+
+                });
+
+            }
+
+        }
+
+
+        /* =========================
+           SEARCH INPUT EVENTS
+        ========================== */
+
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+
+        if (searchInput) {
+
+            /*
+             * Press Enter = Search
+             */
+            searchInput.addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                        searchItem();
+
+                    }
+
+                }
+            );
+
+
+            /*
+             * When search is cleared,
+             * automatically show all products.
+             */
+            searchInput.addEventListener(
+                "input",
+                function() {
+
+                    if (
+                        this.value.trim() === ""
+                    ) {
+
+                        selectedCategory =
+                            "All";
+
+                        renderListings(
+                            "All"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           MODAL CLICK OUTSIDE
+        ========================== */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target &&
+                    event.target.id ===
+                    "authModal"
+                ) {
+
+                    closeAuth();
+
+                }
+
+
+                if (
+                    event.target &&
+                    event.target.id ===
+                    "profileModal"
+                ) {
+
+                    closeProfile();
+
+                }
+
+
+                if (
+                    event.target &&
+                    event.target.id ===
+                    "actionModal"
+                ) {
+
+                    closeActionModal();
+
+                }
+
+
+                if (
+                    event.target &&
+                    event.target.id ===
+                    "listingModal"
+                ) {
+
+                    closeListing();
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           ESCAPE KEY
+        ========================== */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeAuth();
+
+                    closeProfile();
+
+                    closeListing();
+
+                    closeActionModal();
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           INITIAL LOAD
+        ========================== */
+
+        updateNav();
+
+        renderListings("All");
+
+    </script>
+
+</body>
+
+</html>
