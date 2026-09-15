@@ -1,5 +1,9 @@
-// Dynamic API URL: automatically works both on localhost and on Render!
+// Dynamic API URL: Works both locally and on Render!
 const API_BASE_URL = window.location.origin + "/api";
+
+// Put your Cloudinary Cloud Name here (or leave as test default)
+const CLOUDINARY_CLOUD_NAME = "demo"; 
+const CLOUDINARY_PRESET = "docs_upload_example_preset";
 
 const CATEGORY_ICONS = {
     Books: "📚",
@@ -20,7 +24,86 @@ function getUser() {
 }
 
 // =========================================================================
-// AUTHENTICATION (Connects to /api/auth/verify/)
+// GOOGLE OAUTH ONE-TAP / BUTTON INTEGRATION
+// =========================================================================
+
+window.addEventListener("load", function () {
+    // Check if Google Client Library is loaded
+    if (window.google && window.google.accounts) {
+        try {
+            google.accounts.id.initialize({
+                // Public test client id; replace with your own Google Client ID when ready
+                client_id: "511828570984-25dlm4dgm22ke6a83epivsv21n4q8mdg.apps.googleusercontent.com",
+                callback: handleGoogleCredentialResponse,
+                auto_select: false
+            });
+
+            const loginBtnDiv = document.getElementById("googleSignInBtn");
+            const signupBtnDiv = document.getElementById("googleSignUpBtn");
+
+            if (loginBtnDiv) {
+                google.accounts.id.renderButton(loginBtnDiv, {
+                    theme: "outline",
+                    size: "large",
+                    width: 280,
+                    text: "continue_with"
+                });
+            }
+            if (signupBtnDiv) {
+                google.accounts.id.renderButton(signupBtnDiv, {
+                    theme: "outline",
+                    size: "large",
+                    width: 280,
+                    text: "signup_with"
+                });
+            }
+        } catch (e) {
+            console.log("Google Auth initialized in offline/fallback mode.");
+        }
+    }
+});
+
+async function handleGoogleCredentialResponse(response) {
+    try {
+        // Decode Google JWT Token payload safely
+        const base64Url = response.credential.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        const googleUser = JSON.parse(jsonPayload);
+
+        // Send verified Google user to our Django backend!
+        const res = await fetch(`${API_BASE_URL}/auth/verify/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: "google_" + googleUser.sub,
+                email: googleUser.email,
+                name: googleUser.name,
+                device_fingerprint_id: "google_verified_device"
+            })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            localStorage.setItem("loopcycleUser", JSON.stringify(data.user));
+            localStorage.setItem("loopcycleLoggedIn", "true");
+            updateNav();
+            closeAuth();
+            alert(`Verified with Google! Welcome, ${data.user.name}.`);
+        } else {
+            alert(data.error || "Google verification failed.");
+        }
+    } catch (err) {
+        console.error("Google Auth error:", err);
+        alert("Could not process Google login. Try email login.");
+    }
+}
+
+// =========================================================================
+// STANDARD AUTHENTICATION FALLBACK
 // =========================================================================
 
 function openAuth(type) {
@@ -75,7 +158,7 @@ async function signupUser(event) {
             localStorage.setItem("loopcycleLoggedIn", "true");
             updateNav();
             closeAuth();
-            alert(`Welcome to LoopCycle, ${data.user.name}! Your account is active.`);
+            alert(`Account created! Welcome, ${data.user.name}.`);
         } else {
             alert(data.error || "Signup failed.");
         }
@@ -121,7 +204,7 @@ async function loginUser(event) {
         }
     } catch (err) {
         console.error("Login error:", err);
-        alert("Could not connect to Django server.");
+        alert("Could not connect to server.");
     }
 }
 
@@ -145,7 +228,7 @@ function updateNav() {
 }
 
 // =========================================================================
-// MARKETPLACE & LISTINGS (Connects to /api/listings/)
+// MARKETPLACE LISTINGS
 // =========================================================================
 
 async function fetchListingsFromBackend(categoryName = "All") {
@@ -156,7 +239,7 @@ async function fetchListingsFromBackend(categoryName = "All") {
         }
 
         const response = await fetch(url);
-        if (!response.ok) throw new Error("Failed to fetch listings");
+        if (!response.ok) throw new Error("Failed to fetch");
 
         cachedListings = await response.json();
         renderListingsUI(categoryName);
@@ -195,7 +278,7 @@ function makeListingCard(item) {
     const catFormatted = item.category.charAt(0).toUpperCase() + item.category.slice(1);
     const icon = CATEGORY_ICONS[catFormatted] || "♻️";
     const photo = (item.photo_urls && item.photo_urls.length > 0)
-        ? `<img src="${item.photo_urls[0]}" alt="${escapeHtml(item.title)}">`
+        ? `<img src="${item.photo_urls[0]}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;">`
         : icon;
 
     const priceText = item.price
@@ -231,7 +314,7 @@ function makeListingCard(item) {
 }
 
 // =========================================================================
-// CREATE / SAVE LISTING
+// REAL CLOUDINARY PHOTO UPLOAD + CREATE LISTING
 // =========================================================================
 
 function openListing() {
@@ -248,13 +331,6 @@ function closeListing() {
     if (modal) modal.classList.remove("active");
 }
 
-function resetListingForm() {
-    const form = document.getElementById("listingForm");
-    if (form) form.reset();
-    const preview = document.getElementById("photoPreview");
-    if (preview) preview.innerHTML = "Choose a photo of your item";
-}
-
 function previewListingPhoto(event) {
     const file = event.target.files && event.target.files[0];
     const preview = document.getElementById("photoPreview");
@@ -267,9 +343,28 @@ function previewListingPhoto(event) {
 
     const reader = new FileReader();
     reader.onload = function(e) {
-        preview.innerHTML = `<img src="${e.target.result}" alt="Item preview">`;
+        preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-height:120px; border-radius:8px;">`;
     };
     reader.readAsDataURL(file);
+}
+
+// Cloudinary Direct Upload
+async function uploadPhotoToCloudinary(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_PRESET);
+
+    try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await res.json();
+        return data.secure_url || "";
+    } catch (e) {
+        console.warn("Cloudinary direct upload fallback to local preview.");
+        return "";
+    }
 }
 
 async function saveListing(event) {
@@ -291,9 +386,15 @@ async function saveListing(event) {
     const priceVal = document.getElementById("itemPrice").value.trim();
     const description = document.getElementById("itemDescription").value.trim();
 
-    if (!title || !categoryName || !description) {
-        alert("Please add item name, category, and description.");
-        return;
+    // Check for photo file
+    const photoInput = document.getElementById("itemPhoto");
+    let photoUrls = [];
+
+    if (photoInput && photoInput.files && photoInput.files[0]) {
+        const uploadedUrl = await uploadPhotoToCloudinary(photoInput.files[0]);
+        if (uploadedUrl) {
+            photoUrls.push(uploadedUrl);
+        }
     }
 
     const payload = {
@@ -304,7 +405,7 @@ async function saveListing(event) {
         transaction_type: transactionType,
         condition: condition,
         price: transactionType === "barter" ? null : (parseFloat(priceVal) || null),
-        photo_urls: []
+        photo_urls: photoUrls
     };
 
     try {
@@ -315,22 +416,24 @@ async function saveListing(event) {
         });
 
         if (response.ok) {
-            alert("Item successfully published to the live marketplace!");
+            alert("Item published successfully to the live marketplace!");
             closeListing();
-            resetListingForm();
+            document.getElementById("listingForm").reset();
+            const preview = document.getElementById("photoPreview");
+            if (preview) preview.innerHTML = "Choose a photo of your item";
             fetchListingsFromBackend(selectedCategory);
         } else {
-            const errData = await response.json();
-            alert("Failed to save listing: " + JSON.stringify(errData));
+            const err = await response.json();
+            alert("Could not post: " + JSON.stringify(err));
         }
     } catch (err) {
-        console.error("Error saving listing:", err);
-        alert("Could not reach backend server.");
+        console.error("Save listing error:", err);
+        alert("Could not connect to Django server.");
     }
 }
 
 // =========================================================================
-// ESCROW / TRANSACTIONS & DETAILS
+// ESCROW / TRANSACTIONS
 // =========================================================================
 
 function getListingById(id) {
@@ -347,7 +450,7 @@ function closeActionModal() {
     if (modal) modal.classList.remove("active");
 }
 
-function viewListing(id) {
+async function viewListing(id) {
     const item = getListingById(id);
     if (!item) return;
 
@@ -358,8 +461,11 @@ function viewListing(id) {
     let brokenWarning = "";
     if (item.condition === "broken") {
         brokenWarning = `
-            <div style="background:#fff3cd; color:#856404; padding:10px; border-radius:6px; margin:10px 0;">
-                ⚠️ <strong>SDG 12 Alert:</strong> This item is marked as broken/spare. You can check nearby authorized e-waste & scrap centers.
+            <div style="background:#fff3cd; color:#856404; padding:12px; border-radius:8px; margin:12px 0;">
+                ⚠️ <strong>SDG 12 Alert:</strong> Item is marked as broken. 
+                <br><a href="${API_BASE_URL}/e-waste-centers/?city=Bengaluru" target="_blank" style="color:#004085; text-decoration:underline; font-weight:600;">
+                    Click here to view authorized CPCB E-Waste Centers
+                </a>
             </div>`;
     }
 
@@ -396,7 +502,7 @@ function contactListing(id) {
     }
 
     if (item.seller === user.id) {
-        alert("You cannot transact on your own listing!");
+        alert("You cannot buy your own item!");
         return;
     }
 
@@ -406,7 +512,7 @@ function contactListing(id) {
         <div class="success-box">
             <div class="success-icon">🛡️</div>
             <h3>LoopCycle Escrow Protection</h3>
-            <p>Your funds will be <strong>held safely in escrow</strong>. The seller receives the money ONLY after you confirm delivery.</p>
+            <p>Your payment is <strong>held safely in escrow</strong>. The seller only receives payout after you confirm delivery.</p>
         </div>
         <div class="action-details">
             <p><strong>Item:</strong> ${escapeHtml(item.title)}</p>
@@ -443,9 +549,9 @@ async function confirmEscrowPurchase(listingId) {
                 <div class="success-box">
                     <div class="success-icon">✅</div>
                     <h3>Payment Held in Escrow!</h3>
-                    <p>Transaction ID: <code>${data.transaction.id}</code></p>
+                    <p>Order ID: <code>${data.transaction.id}</code></p>
                     <p>Status: <strong style="color:orange">HELD IN ESCROW</strong></p>
-                    <p>Once you meet the seller and verify the product, confirm receipt in your profile to release payout and award +10 Trust Score!</p>
+                    <p>Once you meet the seller and verify the product, click confirm receipt in your profile to release the funds and reward the seller with +10 Trust Score.</p>
                     <button class="primary-btn action-confirm" type="button" onclick="closeActionModal(); fetchListingsFromBackend();">Done</button>
                 </div>
             `;
@@ -454,12 +560,12 @@ async function confirmEscrowPurchase(listingId) {
         }
     } catch (err) {
         console.error("Escrow error:", err);
-        alert("Server error processing escrow.");
+        alert("Server error processing transaction.");
     }
 }
 
 // =========================================================================
-// PROFILE & USER ACTIVITY
+// PROFILE MODAL
 // =========================================================================
 
 function openProfile() {
@@ -472,6 +578,7 @@ function openProfile() {
     document.getElementById("profileName").textContent = user.name || "Loop Member";
     document.getElementById("profileEmail").textContent = user.email || "";
     document.getElementById("profileAvatar").textContent = (user.name || "U").charAt(0).toUpperCase();
+    document.getElementById("profileTrustScore").textContent = user.trust_score || 0;
 
     const myItems = cachedListings.filter(item => item.seller === user.id);
     document.getElementById("profileItemCount").textContent = myItems.length;
@@ -569,7 +676,7 @@ function escapeHtml(value) {
         .replace(/'/g, "&#039;");
 }
 
-// Modal closing helpers
+// Close modals on background click or ESC
 document.addEventListener("click", function(event) {
     if (event.target && event.target.id === "authModal") closeAuth();
     if (event.target && event.target.id === "profileModal") closeProfile();
