@@ -104,19 +104,17 @@
             background: var(--primary);
         }
 
-        /* =========================================================
-           WHY WE EXIST — ACCORDION IMPACT SLIDER
-           ========================================================= */
+        /* WHY WE EXIST — ACCORDION SECTION */
         .why-we-exist-section {
             background: #F6F4EE;
-            padding: 56px 8% 70px;
+            padding: 56px 8% 65px;
             border-bottom: 1px solid var(--border);
         }
 
         .why-header {
             text-align: center;
             max-width: 740px;
-            margin: 0 auto 40px;
+            margin: 0 auto 36px;
         }
 
         .why-badge {
@@ -129,15 +127,15 @@
             font-weight: 600;
             padding: 6px 16px;
             border-radius: 999px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .why-header h1 {
-            font-size: clamp(28px, 4.2vw, 44px);
+            font-size: clamp(28px, 4vw, 42px);
             font-weight: 800;
             letter-spacing: -0.015em;
             line-height: 1.22;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             color: #17170F;
         }
 
@@ -149,20 +147,20 @@
         }
 
         .why-header p {
-            font-size: 16.5px;
+            font-size: 16px;
             color: #5F5D57;
             line-height: 1.6;
         }
 
-        /* ACCORDION CONTAINER */
+        /* ACCORDION CONTAINER (NO SOLID BLANK BOX) */
         .options {
             display: flex;
             width: 100%;
             height: 440px;
             overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(20, 153, 114, 0.14);
-            background: #2a3b32;
+            box-shadow: 0 16px 45px rgba(20, 153, 114, 0.12);
+            background: #EAE6DF;
         }
 
         .option {
@@ -171,7 +169,7 @@
             flex-direction: column;
             justify-content: flex-end;
             overflow: hidden;
-            min-width: 58px;
+            min-width: 60px;
             background-size: cover;
             background-position: center;
             cursor: pointer;
@@ -180,7 +178,7 @@
         }
 
         .option.active {
-            flex: 7.5 1 0%;
+            flex: 7 1 0%;
         }
 
         .option .wash {
@@ -189,33 +187,33 @@
             transition: opacity 0.5s ease;
         }
 
-        .option:nth-child(1) .wash { background: #EAE6DF; }
-        .option:nth-child(2) .wash { background: #E0EBE4; }
-        .option:nth-child(3) .wash { background: #E5EDE0; }
-        .option:nth-child(4) .wash { background: #EBE4DF; }
-        .option:nth-child(5) .wash { background: #E0EAF2; }
-        .option:nth-child(6) .wash { background: #EFE4E0; }
+        .option:nth-child(1) .wash { background: #F0E4EC; }
+        .option:nth-child(2) .wash { background: #E4EBF5; }
+        .option:nth-child(3) .wash { background: #E9F1E4; }
+        .option:nth-child(4) .wash { background: #DFF0E7; }
+        .option:nth-child(5) .wash { background: #F5E9DE; }
+        .option:nth-child(6) .wash { background: #EDE3E0; }
 
         .option .darken {
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 25%, rgba(0,0,0,0.88) 100%);
+            background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,0.85) 100%);
             opacity: 0;
             transition: opacity 0.5s ease;
         }
 
         .option.active .darken { opacity: 1; }
-        .option.active .wash { opacity: 0.18; }
+        .option.active .wash { opacity: 0.15; }
 
         .center-icon {
             position: absolute;
             top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 28px;
-            opacity: 0.8;
+            font-size: 30px;
+            opacity: 0.85;
             transition: opacity 0.4s ease, transform 0.5s ease;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
         }
 
         .option.active .center-icon {
@@ -226,7 +224,7 @@
         .label {
             position: relative;
             z-index: 2;
-            padding: 22px 20px;
+            padding: 20px 18px;
         }
 
         .label .tag {
@@ -234,7 +232,7 @@
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.04em;
-            padding: 4px 11px;
+            padding: 4px 10px;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.95);
             color: #17170F;
@@ -248,13 +246,13 @@
 
         .label .main {
             font-weight: 800;
-            font-size: 21px;
+            font-size: 20px;
             color: #1A1A18;
             white-space: nowrap;
             opacity: 0;
             transform: translateY(10px);
             transition: opacity 0.5s ease, transform 0.5s ease, color 0.5s ease;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
         .option.active .label .main {
@@ -264,9 +262,9 @@
         }
 
         .label .sub {
-            font-size: 13.5px;
+            font-size: 13px;
             color: #F1F1EF;
-            margin-top: 6px;
+            margin-top: 5px;
             opacity: 0;
             transform: translateY(10px);
             max-width: 360px;
@@ -282,12 +280,12 @@
 
         .zoom-badge {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: 14px;
+            right: 14px;
             z-index: 3;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             color: var(--primary);
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             padding: 6px 12px;
             border-radius: 20px;
@@ -298,7 +296,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
         .option.active .zoom-badge {
@@ -342,9 +340,7 @@
             backdrop-filter: blur(8px);
         }
 
-        .lightbox-overlay.active {
-            display: flex;
-        }
+        .lightbox-overlay.active { display: flex; }
 
         .lightbox-content {
             position: relative;
@@ -542,15 +538,13 @@
             border: 1px solid var(--border);
         }
 
-        /* =========================================================
-           DONATION COMPONENT (EXACT MATCH TO IMAGE 1)
-           ========================================================= */
+        /* DONATION COMPONENT (EXACT MATCH TO IMAGE 1) */
         .donation-container {
             max-width: 680px;
-            margin: 40px auto 70px;
+            margin: 40px auto 65px;
             background: #EBF7F0;
             border-radius: 28px;
-            padding: 44px 38px 40px;
+            padding: 42px 36px 38px;
             position: relative;
             box-shadow: 0 10px 40px rgba(20, 153, 114, 0.08);
             border: 1px solid #D6EFE1;
@@ -582,7 +576,7 @@
         }
 
         .donation-title {
-            font-size: clamp(28px, 4vw, 36px);
+            font-size: clamp(26px, 3.8vw, 35px);
             font-weight: 800;
             color: #17170F;
             line-height: 1.25;
@@ -600,20 +594,20 @@
             font-size: 14px;
             color: #4A5568;
             line-height: 1.6;
-            margin-bottom: 26px;
+            margin-bottom: 24px;
         }
 
         .donation-box {
             background: #ffffff;
             border-radius: 18px;
-            padding: 22px 24px;
-            margin-bottom: 20px;
+            padding: 20px 22px;
+            margin-bottom: 18px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.03);
             border: 1px solid #E2E8F0;
         }
 
         .donation-box h4 {
-            font-size: 16.5px;
+            font-size: 16px;
             font-weight: 700;
             color: #1A202C;
             margin-bottom: 6px;
@@ -631,25 +625,25 @@
         .donation-pillars {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-bottom: 26px;
+            gap: 12px;
+            margin-bottom: 24px;
         }
 
         .donation-pillar-card {
             background: #ffffff;
             border-radius: 16px;
-            padding: 16px 14px;
+            padding: 16px 12px;
             border: 1px solid #E2E8F0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         .donation-pillar-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 22px;
+            margin-bottom: 6px;
         }
 
         .donation-pillar-card h5 {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
             color: #1A202C;
             margin-bottom: 4px;
@@ -663,7 +657,7 @@
 
         .donation-btn-row {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -673,13 +667,13 @@
             color: #ffffff;
             font-size: 13.5px;
             font-weight: 600;
-            padding: 12px 24px;
+            padding: 11px 22px;
             border-radius: 999px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 14px rgba(15, 110, 86, 0.25);
+            box-shadow: 0 4px 14px rgba(15, 110, 86, 0.22);
             transition: background 0.2s, transform 0.15s;
         }
 
@@ -694,7 +688,7 @@
             border: 1px solid #CBD5E0;
             font-size: 13px;
             font-weight: 600;
-            padding: 11px 22px;
+            padding: 10px 20px;
             border-radius: 999px;
             text-decoration: none;
             transition: background 0.2s, border-color 0.2s;
@@ -708,16 +702,14 @@
         .donation-disclaimer {
             font-size: 11px;
             color: #718096;
-            margin-top: 18px;
+            margin-top: 16px;
         }
 
-        /* =========================================================
-           LISTING MODAL (EXACT MATCH TO IMAGE 2)
-           ========================================================= */
+        /* LISTING MODAL (EXACT MATCH TO IMAGE 2) */
         .listing-modal-content {
             background: #ffffff;
             border-radius: 28px;
-            padding: 38px 36px;
+            padding: 36px 32px;
             max-width: 440px;
             width: 92%;
             position: relative;
@@ -725,20 +717,19 @@
 
         .listing-modal-header h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 30px;
+            font-size: 29px;
             font-weight: 600;
             color: #17170F;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .listing-modal-header p {
             font-size: 13px;
             color: #718096;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             line-height: 1.45;
         }
 
-        /* Action pill radio buttons */
         .listing-type-group {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -751,7 +742,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            padding: 10px 6px;
+            padding: 9px 4px;
             border: 1.5px solid #E2E8F0;
             border-radius: 12px;
             font-size: 12px;
@@ -779,7 +770,7 @@
         .photo-drop-box {
             border: 1.5px dashed #CBD5E0;
             border-radius: 14px;
-            padding: 26px 16px;
+            padding: 24px 16px;
             text-align: center;
             color: #A0AEC0;
             font-size: 12px;
@@ -793,12 +784,12 @@
             color: white;
             font-size: 15px;
             font-weight: 600;
-            padding: 14px;
+            padding: 13px;
             border-radius: 999px;
             border: none;
             width: 100%;
             cursor: pointer;
-            margin-top: 18px;
+            margin-top: 16px;
             box-shadow: 0 6px 18px rgba(15, 110, 86, 0.28);
             transition: background 0.2s;
         }
@@ -823,10 +814,10 @@
 
         .modal-box {
             background: white;
-            padding: 34px;
+            padding: 32px;
             border-radius: 20px;
             width: 90%;
-            max-width: 460px;
+            max-width: 450px;
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
@@ -834,7 +825,7 @@
 
         .modal-close {
             position: absolute;
-            top: 18px; right: 18px;
+            top: 16px; right: 16px;
             border: none;
             background: #F7FAFC;
             width: 30px;
@@ -852,16 +843,12 @@
         .modal-form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 12.5px; color: #2D3748; }
         .modal-form-group input, .modal-form-group select, .modal-form-group textarea {
             width: 100%;
-            padding: 10px 14px;
+            padding: 9px 13px;
             border-radius: 10px;
             border: 1.5px solid #E2E8F0;
             outline: none;
             font-family: inherit;
             font-size: 13.5px;
-        }
-
-        .modal-form-group input:focus, .modal-form-group select:focus, .modal-form-group textarea:focus {
-            border-color: #0F6E56;
         }
 
         .primary-btn {
@@ -885,7 +872,7 @@
         }
 
         .modal-full-btn { width: 100%; margin-top: 8px; }
-        .modal-switch { margin-top: 18px; text-align: center; font-size: 14px; }
+        .modal-switch { margin-top: 16px; text-align: center; font-size: 13.5px; }
         .modal-switch button { background: none; border: none; color: var(--accent); font-weight: 700; cursor: pointer; }
 
         /* PROFILE MODAL */
@@ -893,13 +880,13 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
             border-bottom: 1px solid var(--border);
         }
 
         .profile-avatar {
-            width: 56px; height: 56px;
+            width: 54px; height: 54px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
@@ -914,7 +901,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin: 18px 0;
+            margin: 16px 0;
         }
 
         .profile-stat {
@@ -925,8 +912,8 @@
             border: 1px solid #d8f3dc;
         }
 
-        .profile-stat strong { display: block; font-size: 19px; color: var(--primary); }
-        .profile-stat span { font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; }
+        .profile-stat strong { display: block; font-size: 18px; color: var(--primary); }
+        .profile-stat span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
 
         .loop-history-badge {
             display: inline-block;
@@ -963,7 +950,7 @@
 </head>
 <body>
 
-<!-- NAVBAR (Smooth scroll tabs in exact chronological order) -->
+<!-- NAVBAR -->
 <nav>
     <a href="#" class="logo">Loop<span>Cycle</span></a>
     <div class="nav-links">
@@ -981,19 +968,19 @@
     </div>
 </nav>
 
-<!-- 1. WHY WE EXIST — INTERACTIVE 6-PANEL IMPACT ACCORDION -->
+<!-- 1. WHY WE EXIST — INTERACTIVE ACCORDION (GUARANTEED VISIBLE) -->
 <section id="whyWeExist" class="why-we-exist-section">
   <div style="max-width: 1060px; margin: 0 auto;">
     <div class="why-header">
       <span class="why-badge">🎯 Why LoopCycle Exists</span>
       <h1>Built around <em>six core realities</em><br>bigger than the marketplace itself.</h1>
-      <p>India generates over 1.75 million tonnes of e-waste yearly, while textbook costs burden students. LoopCycle moves the needle on UN SDG 12 through verified circular reuse.</p>
+      <p>India generates over 1.75M tonnes of e-waste yearly, while textbook costs burden students. LoopCycle moves the needle on UN SDG 12 through verified circular reuse.</p>
     </div>
 
-    <!-- ACCORDION -->
+    <!-- ACCORDION (GUARANTEED VISIBLE) -->
     <div class="options" id="optionsContainer"></div>
     <p style="text-align: center; font-size: 13px; color: #8C887E; margin-top: 16px;">
-      Click any goal panel to expand &middot; click <strong>"🔍 View Full Image"</strong> to view in HD
+      Click any goal panel to expand &middot; click <strong>"🔍 View HD"</strong> to examine full photo
     </p>
 
     <!-- GET STARTED BUTTON -->
@@ -1056,13 +1043,1103 @@
     <div class="listing-results" id="listingResults">
         <div class="listing-results-header">
             <h3 id="listingTitle">All marketplace items</h3>
-            <span id="listingCount" style="color: var(--text-muted); font-size: 14px;">0 items</span>
+            <span id="listingCount" style="color: var(--text-muted); font-size: 14px;">4 items</span>
         </div>
         <div class="listing-grid" id="listingGrid"></div>
     </div>
 </section>
 
 <!-- 3. DONATE CLOTHES — EXACT MATCH TO IMAGE 1 -->
-<section id="donate" style="padding: 20px 4%;">
+<section id="donate" style="padding: 10px 4% 30px;">
     <div class="donation-container">
-        <div class="donation-he
+        <div class="donation-heart-watermark">🤍</div>
+        
+        <span class="donation-badge">
+            ❤️ Make a difference
+        </span>
+
+        <h2 class="donation-title">
+            Give more than things. <em>Give hope.</em>
+        </h2>
+
+        <p class="donation-desc">
+            Sometimes the best way to give something a second life is to help someone who needs it. LoopCycle supports responsible reuse and connects our community with organizations working to create real social impact.
+        </p>
+
+        <!-- Clothes Box Foundation Box -->
+        <div class="donation-box">
+            <h4>🤝 Support Clothes Box Foundation</h4>
+            <p>Want to help through clothing donations or support their social initiatives? Visit the official Clothes Box Foundation website to learn about their work and choose the best way to contribute.</p>
+        </div>
+
+        <!-- 3 Pillars -->
+        <div class="donation-pillars">
+            <div class="donation-pillar-card">
+                <div class="donation-pillar-icon">👕</div>
+                <h5>Donate what you can</h5>
+                <p>Give useful clothes a meaningful second life.</p>
+            </div>
+            <div class="donation-pillar-card">
+                <div class="donation-pillar-icon">♻️</div>
+                <h5>Keep things in the loop</h5>
+                <p>Reduce unnecessary waste through responsible reuse.</p>
+            </div>
+            <div class="donation-pillar-card">
+                <div class="donation-pillar-icon">❤️</div>
+                <h5>Help someone</h5>
+                <p>Your contribution can reach people who genuinely need support.</p>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="donation-btn-row">
+            <a href="https://www.clothesboxfoundation.org/" target="_blank" rel="noopener noreferrer" class="donation-primary-btn">
+                ❤️ Help / Donate Now →
+            </a>
+            <a href="https://www.clothesboxfoundation.org/" target="_blank" rel="noopener noreferrer" class="donation-secondary-btn">
+                Visit Clothes Box Foundation
+            </a>
+        </div>
+
+        <p class="donation-disclaimer">
+            You will be redirected to the official Clothes Box Foundation website to learn more and choose how you would like to help.
+        </p>
+    </div>
+</section>
+
+<!-- 4. HOW IT WORKS -->
+<section class="section" id="how">
+    <div class="section-heading">
+        <h2>How LoopCycle Works</h2>
+        <p>A simple 3-step circular flow designed for zero waste and ironclad trust.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
+        <div style="background: white; padding: 26px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 8px;">01</div>
+            <h3>List or Discover</h3>
+            <p style="color: var(--text-muted); font-size: 14.5px;">Upload items you no longer need or find items listed by students and neighbors around you.</p>
+        </div>
+        <div style="background: white; padding: 26px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 8px;">02</div>
+            <h3>Choose your Loop</h3>
+            <p style="color: var(--text-muted); font-size: 14.5px;">Buy via Escrow, rent short-term, or barter textbook-for-textbook with zero cash exchanged.</p>
+        </div>
+        <div style="background: white; padding: 26px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 8px;">03</div>
+            <h3>Safe Handover</h3>
+            <p style="color: var(--text-muted); font-size: 14.5px;">Verify the item in person. Confirm delivery to release payment and award +10 Trust Score to the seller.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 5. OUR IMPACT -->
+<section class="section" id="impact" style="background: var(--primary); color: white; border-radius: 20px; margin: 20px 8%; text-align: center; padding: 50px 20px;">
+    <h2 style="color: white; font-size: 32px;">Every Loop Creates Measurable Impact</h2>
+    <p style="color: #b7e4c7; margin-top: 8px;">Directly addressing UN SDG 12 (Target 12.5) by keeping useful assets circulating.</p>
+    <div style="display: flex; justify-content: space-around; margin-top: 36px; flex-wrap: wrap; gap: 20px;">
+        <div><h3 style="font-size: 36px; color: #52b788;">12,480+</h3><p>Items Reused</p></div>
+        <div><h3 style="font-size: 36px; color: #52b788;">8,600 kg</h3><p>Landfill Waste Avoided</p></div>
+        <div><h3 style="font-size: 36px; color: #52b788;">4,200+</h3><p>Verified Loop Members</p></div>
+    </div>
+</section>
+
+<!-- 6. TRUST LAYER -->
+<section class="section" id="trust">
+    <div class="section-heading">
+        <h2>Built on Trust, Not Just Transactions</h2>
+        <p>Because second-hand shouldn't mean second-class.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
+        <div style="background: white; padding: 26px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 32px; margin-bottom: 10px;">🛡️</div>
+            <h4>Held Escrow Security</h4>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 6px;">Funds are held securely by LoopCycle. The seller only receives money when the buyer confirms delivery.</p>
+        </div>
+        <div style="background: white; padding: 26px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 32px; margin-bottom: 10px;">⭐</div>
+            <h4>Algorithmic Trust Scores</h4>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 6px;">Every successful, dispute-free transaction increases user reputation by +10 points directly in our database.</p>
+        </div>
+        <div style="background: white; padding: 26px; border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="font-size: 32px; margin-bottom: 10px;">🤝</div>
+            <h4>Dispute Freezing</h4>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 6px;">Received a broken item? Click dispute to instantly freeze payout and open an investigation ticket.</p>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     LISTING MODAL (EXACT MATCH TO IMAGE 2 + BARTER FOR BOOKS ONLY)
+     ========================================================= -->
+<div id="listingModal" class="modal-overlay">
+  <div class="listing-modal-content">
+    <button class="modal-close" type="button" onclick="closeListing()">×</button>
+    
+    <div class="listing-modal-header">
+      <h2>List an item</h2>
+      <p>Add your item so other LoopCycle members can find it.</p>
+    </div>
+
+    <form id="listingForm" onsubmit="saveListing(event)">
+      <!-- Item Name -->
+      <div class="modal-form-group">
+        <label>Item name</label>
+        <input id="itemTitle" type="text" placeholder="e.g. Engineering Books" required>
+      </div>
+
+      <!-- Category -->
+      <div class="modal-form-group">
+        <label>Category</label>
+        <select id="itemCategory" onchange="handleCategoryChangeForBarter(this.value)" required>
+          <option value="">Choose category</option>
+          <option value="books">📚 Books</option>
+          <option value="electronics">💻 Electronics</option>
+          <option value="furniture">🪑 Furniture</option>
+          <option value="vehicles">🚲 Vehicles</option>
+        </select>
+      </div>
+
+      <!-- What do you want to do (Pill Buttons: Buy, Rent, Barter) -->
+      <div class="modal-form-group">
+        <label>What do you want to do with this item?</label>
+        <div class="listing-type-group">
+          <div class="type-pill-btn active" id="btnTypeBuy" onclick="selectListingType('sell')">
+            🛒 Buy / Sell
+          </div>
+          <div class="type-pill-btn" id="btnTypeRent" onclick="selectListingType('rent')">
+            🏠 Rent
+          </div>
+          <div class="type-pill-btn" id="btnTypeBarter" onclick="selectListingType('barter')">
+            🤝 Barter
+          </div>
+        </div>
+        <p id="barterNotice" style="font-size: 11px; color: #0F6E56; margin-top: 5px;">
+          * Note: Barter is strictly reserved for Books/Textbooks.
+        </p>
+      </div>
+
+      <!-- Condition & Price Grid -->
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px;">
+        <div class="modal-form-group">
+          <label>Condition</label>
+          <select id="itemCondition" required>
+            <option value="Like new">Like new</option>
+            <option value="Good" selected>Good</option>
+            <option value="Fair">Fair</option>
+            <option value="broken">Used / Broken (E-Waste)</option>
+          </select>
+        </div>
+        <div class="modal-form-group">
+          <label>Price (₹)</label>
+          <input id="itemPrice" type="number" min="0" placeholder="350">
+        </div>
+      </div>
+
+      <!-- Photo Picker (Matches Image 2) -->
+      <div class="modal-form-group">
+        <label>Photo</label>
+        <input id="itemPhoto" type="file" accept="image/*" onchange="previewListingPhoto(event)" style="font-size: 12px;">
+        <div class="photo-drop-box" id="photoPreview">
+          Choose a photo of your item
+        </div>
+      </div>
+
+      <!-- Details (Previous owners / story) -->
+      <div class="modal-form-group">
+        <label>Details & Loop History</label>
+        <input id="itemDetails" type="text" placeholder="e.g. 2nd owner, all pages intact, semester 1 passed">
+      </div>
+
+      <!-- Description -->
+      <div class="modal-form-group">
+        <label>Description</label>
+        <textarea id="itemDescription" rows="3" placeholder="Tell buyers about the item, condition, age, accessories, etc." required></textarea>
+      </div>
+
+      <button class="publish-btn" type="submit">Publish item →</button>
+    </form>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAuth()">×</button>
+    <div id="loginFormBox">
+      <h2>Welcome Back</h2>
+      <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 14px;">Log in to access your LoopCycle account.</p>
+      <form onsubmit="loginUser(event)">
+        <div class="modal-form-group"><label>Email</label><input id="loginEmail" type="email" placeholder="you@example.com" required></div>
+        <div class="modal-form-group"><label>Password</label><input id="loginPassword" type="password" placeholder="••••••••" required></div>
+        <button class="primary-btn modal-full-btn" type="submit">Log in →</button>
+      </form>
+      <div class="modal-switch">New to LoopCycle? <button onclick="switchAuth('signup')">Create an account</button></div>
+    </div>
+    
+    <div id="signupFormBox" style="display:none">
+      <h2>Join LoopCycle</h2>
+      <div style="background: #e8f5e9; border: 1px solid #a5d6a7; color: #1b5e20; padding: 6px 12px; border-radius: 20px; font-size: 11.5px; display: inline-flex; align-items: center; gap: 6px; margin: 8px 0 14px;">
+        <span>🛡️</span> Protected by Google reCAPTCHA v3 & Device Fingerprinting
+      </div>
+      <form onsubmit="signupUser(event)">
+        <div class="modal-form-group"><label>Full Name</label><input id="signupName" type="text" placeholder="Your name" required></div>
+        <div class="modal-form-group"><label>Email</label><input id="signupEmail" type="email" placeholder="you@example.com" required></div>
+        <div class="modal-form-group"><label>Password</label><input id="signupPassword" type="password" placeholder="Create a password" minlength="6" required></div>
+        <button class="primary-btn modal-full-btn" type="submit">Create account →</button>
+      </form>
+      <div class="modal-switch">Already a member? <button onclick="switchAuth('login')">Log in</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTION & ESCROW DETAILS MODAL -->
+<div id="actionModal" class="modal-overlay">
+  <div class="modal-box action-modal-content">
+    <button class="modal-close" type="button" onclick="closeActionModal()">×</button>
+    <div id="actionModalBody"></div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL (WITH LOOP HISTORY OF OWNERS) -->
+<div id="profileModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeProfile()">×</button>
+    <div class="profile-top">
+      <div class="profile-avatar" id="profileAvatar">U</div>
+      <div><h3 id="profileName">Loop Member</h3><div id="profileEmail" style="font-size: 13.5px; color: var(--text-muted);"></div></div>
+    </div>
+    <h2>My Profile</h2>
+    <div class="profile-stats">
+      <div class="profile-stat"><strong id="profileItemCount">0</strong><span>Listed</span></div>
+      <div class="profile-stat"><strong id="profileTrustScore">0</strong><span>Trust Score</span></div>
+      <div class="profile-stat"><strong style="color: var(--accent);">Verified</strong><span>Status</span></div>
+    </div>
+    <div style="margin: 20px 0;">
+      <h3 style="font-size: 15px; margin-bottom: 10px;">My Circular Loop Journey & Listed Items</h3>
+      <div id="profileListings"></div>
+    </div>
+    <button class="logout-btn" onclick="logoutUser()">Log out</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div>© 2026 LoopCycle — SDG 12 Responsible Consumption & Circular Economy</div>
+    <div><a href="#whyWeExist" style="color: var(--text-muted); text-decoration:none;">Back to Top ↑</a></div>
+</footer>
+
+<!-- COMPLETE, TESTED, ZERO-DEPENDENCY JAVASCRIPT ENGINE -->
+<script>
+  // Automatic dynamic API URL: works seamlessly locally and on Render!
+  const API_BASE_URL = window.location.origin + "/api";
+
+  const CATEGORY_ICONS = {
+    Books: "📚", Electronics: "💻", Furniture: "🪑", Vehicles: "🚲"
+  };
+
+  let selectedCategory = "All";
+  let cachedListings = [];
+  let selectedTransactionType = "sell";
+
+  // Built-in Demo Items (Ensures marketplace is NEVER empty during presentations!)
+  const fallbackListings = [
+    {
+      id: "demo-item-1",
+      title: "Engineering Mathematics (Vol 1 & 2)",
+      description: "Semester 1 textbooks in great condition. No missing pages. Willing to barter for Data Structures.",
+      category: "books",
+      transaction_type: "barter",
+      condition: "working",
+      price: null,
+      photo_urls: [],
+      seller_details: { name: "Rohan Sharma", trust_score: 15 }
+    },
+    {
+      id: "demo-item-2",
+      title: "Lenovo ThinkPad T480 (Motherboard issue)",
+      description: "Screen and RAM intact, motherboard dead. Ideal for spare parts or authorized e-waste recycling.",
+      category: "electronics",
+      transaction_type: "sell",
+      condition: "broken",
+      price: "3200.00",
+      photo_urls: [],
+      seller_details: { name: "Ananya Sen", trust_score: 30 }
+    },
+    {
+      id: "demo-item-3",
+      title: "Ergonomic Study Table & Chair",
+      description: "Sturdy wooden desk with adjustable mesh chair. Moving out of hostel room.",
+      category: "furniture",
+      transaction_type: "sell",
+      condition: "working",
+      price: "1800.00",
+      photo_urls: [],
+      seller_details: { name: "Vikram Rao", trust_score: 50 }
+    },
+    {
+      id: "demo-item-4",
+      title: "Hercules 21-Speed Mountain Bicycle",
+      description: "Campus cycle in smooth riding condition. Available for monthly rental.",
+      category: "vehicles",
+      transaction_type: "rent",
+      condition: "working",
+      price: "250.00",
+      photo_urls: [],
+      seller_details: { name: "Priya Patel", trust_score: 25 }
+    }
+  ];
+
+  // =========================================================
+  // 1. WHY WE EXIST INTERACTIVE ACCORDION (SLIDER WITH 6 IMAGES)
+  // =========================================================
+  const impactOptions = [
+    {
+      tag: "SDG 1",
+      title: "No Poverty",
+      description: "Affordable textbook barter & reuse keeps education essentials within reach for every student.",
+      icon: "🤝",
+      local: "/static/img1.jpg",
+      web: "https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1200&q=85"
+    },
+    {
+      tag: "SDG 11",
+      title: "Sustainable Cities",
+      description: "Keeping goods circulating inside college campuses and cities instead of dumping them in landfills.",
+      icon: "🏙️",
+      local: "/static/img2.jpg",
+      web: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1200&q=85"
+    },
+    {
+      tag: "SDG 12",
+      title: "Responsible Consumption",
+      description: "Buying less new, reusing more — the core circular loop this platform runs on.",
+      icon: "♻️",
+      local: "/static/img3.jpg",
+      web: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1200&q=85"
+    },
+    {
+      tag: "TARGET 12.5",
+      title: "Reduce Waste Substantially",
+      description: "The specific UN target LoopCycle directly moves the needle on through held-escrow reuse.",
+      icon: "📉",
+      local: "/static/img4.jpg",
+      web: "https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&w=1200&q=85"
+    },
+    {
+      tag: "SDG 13",
+      title: "Climate Action",
+      description: "Every repurposed device or furniture item eliminates the carbon footprint of manufacturing new ones.",
+      icon: "🌱",
+      local: "/static/img5.jpg",
+      web: "https://images.unsplash.com/photo-1517854825319-ff41d3482b80?auto=format&fit=crop&w=1200&q=85"
+    },
+    {
+      tag: "THE REALITY",
+      title: "India's Waste Crisis",
+      description: "1.75M tonnes generated yearly — LoopCycle routes broken items directly to CPCB recyclers.",
+      icon: "⚠️",
+      local: "/static/img6.jpg",
+      web: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=85"
+    }
+  ];
+
+  let currentImpactIndex = 2; // Default active on SDG 12
+
+  function renderImpactAccordion() {
+    const container = document.getElementById('optionsContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    impactOptions.forEach((opt, index) => {
+      const el = document.createElement('div');
+      el.className = 'option' + (index === currentImpactIndex ? ' active' : '');
+      
+      // Start immediately with web image so it NEVER shows a blank box!
+      el.style.backgroundImage = `url('${opt.web}')`;
+
+      // Check if local image exists and swap it in
+      const testImg = new Image();
+      testImg.src = opt.local;
+      testImg.onload = () => { el.style.backgroundImage = `url('${opt.local}')`; };
+
+      el.innerHTML = `
+        <div class="wash"></div>
+        <div class="darken"></div>
+        <span class="center-icon">${opt.icon}</span>
+        <button class="zoom-badge" type="button" onclick="openLightbox(${index}, event)">
+          🔍 View HD
+        </button>
+        <div class="label">
+          <span class="tag">${opt.tag}</span>
+          <div class="main">${opt.title}</div>
+          <div class="sub">${opt.description}</div>
+        </div>
+      `;
+
+      el.addEventListener('click', (e) => {
+        if (e.target.closest('.zoom-badge')) return;
+        if (currentImpactIndex !== index) {
+          currentImpactIndex = index;
+          renderImpactAccordion();
+        }
+      });
+
+      container.appendChild(el);
+    });
+  }
+
+  // =========================================================
+  // LIGHTBOX LOGIC
+  // =========================================================
+  function openLightbox(index, event) {
+    if (event) event.stopPropagation();
+    const opt = impactOptions[index];
+    const lightbox = document.getElementById('imageLightbox');
+    const img = document.getElementById('lightboxImg');
+    const caption = document.getElementById('lightboxCaption');
+    
+    if (lightbox && img && caption) {
+      img.src = opt.local;
+      img.onerror = () => { img.src = opt.web; };
+      caption.innerHTML = `<strong>${opt.tag} — ${opt.title}</strong><br>${opt.description}`;
+      lightbox.classList.add('active');
+    }
+  }
+
+  function closeLightbox(event) {
+    if (event && event.target && event.target.id === 'lightboxImg') return;
+    const lightbox = document.getElementById('imageLightbox');
+    if (lightbox) lightbox.classList.remove('active');
+  }
+
+  // =========================================================
+  // VEHICLE CATEGORY -> GOVT RVSF PORTAL HOOK
+  // =========================================================
+  function handleVehicleCategoryClick() {
+    const userChoice = confirm(
+      "🚗 Vehicles on LoopCycle:\n\n" +
+      "• Click OK to visit the official Govt. of India Registered Vehicle Scrapping Facility (RVSF / VAHAN) Portal for end-of-life vehicle deregistration.\n\n" +
+      "• Click Cancel to browse campus cycles & two-wheelers for sale/rent on LoopCycle."
+    );
+
+    if (userChoice) {
+      window.open("https://vscrap.parivahan.gov.in/vehiclescrap/vahan/welcome.xhtml", "_blank", "noopener,noreferrer");
+    } else {
+      category('Vehicles');
+    }
+  }
+
+  // =========================================================
+  // BARTER RULE: ENFORCE BARTER FOR BOOKS ONLY
+  // =========================================================
+  function handleCategoryChangeForBarter(catValue) {
+    const barterBtn = document.getElementById("btnTypeBarter");
+    const notice = document.getElementById("barterNotice");
+
+    if (catValue === "books") {
+      barterBtn.classList.remove("disabled");
+      barterBtn.title = "Barter enabled for textbooks!";
+      if (notice) notice.textContent = "✅ Barter is available for Books & Study Materials!";
+      if (notice) notice.style.color = "#0F6E56";
+    } else {
+      if (selectedTransactionType === "barter") {
+        selectListingType("sell");
+      }
+      barterBtn.classList.add("disabled");
+      barterBtn.title = "Barter is strictly reserved for Books/Textbooks";
+      if (notice) notice.textContent = "⚠️ Barter is restricted to Books only. For other items, please choose Buy/Sell or Rent.";
+      if (notice) notice.style.color = "#C53030";
+    }
+  }
+
+  function selectListingType(type) {
+    const categoryVal = document.getElementById("itemCategory").value;
+
+    if (type === "barter" && categoryVal !== "books") {
+      alert("Notice: As per LoopCycle's SDG policy, Barter is strictly reserved for Books & Textbooks to ensure standardized, fair knowledge exchange.");
+      return;
+    }
+
+    selectedTransactionType = type;
+
+    document.getElementById("btnTypeBuy").classList.toggle("active", type === "sell");
+    document.getElementById("btnTypeRent").classList.toggle("active", type === "rent");
+    document.getElementById("btnTypeBarter").classList.toggle("active", type === "barter");
+
+    const priceInput = document.getElementById("itemPrice");
+    if (type === "barter") {
+      if (priceInput) {
+        priceInput.value = "";
+        priceInput.disabled = true;
+        priceInput.placeholder = "Free / Barter (No Cash)";
+      }
+    } else {
+      if (priceInput) {
+        priceInput.disabled = false;
+        priceInput.placeholder = type === "rent" ? "Rent per month (₹)" : "350";
+      }
+    }
+  }
+
+  // =========================================================
+  // AUTHENTICATION (Connects to live /api/auth/verify/)
+  // =========================================================
+  function getUser() {
+    try {
+      return JSON.parse(localStorage.getItem("loopcycleUser") || "null");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function openAuth(type) {
+    const modal = document.getElementById("authModal");
+    if (!modal) return;
+    modal.classList.add("active");
+    switchAuth(type);
+  }
+
+  function switchAuth(type) {
+    const loginBox = document.getElementById("loginFormBox");
+    const signupBox = document.getElementById("signupFormBox");
+    if (loginBox) loginBox.style.display = type === "login" ? "block" : "none";
+    if (signupBox) signupBox.style.display = type === "signup" ? "block" : "none";
+  }
+
+  function closeAuth() {
+    const modal = document.getElementById("authModal");
+    if (modal) modal.classList.remove("active");
+  }
+
+  async function signupUser(event) {
+    event.preventDefault();
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+
+    if (!name || !email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const pseudoUid = "usr_" + btoa(email).replace(/=/g, "").slice(0, 16);
+      const res = await fetch(`${API_BASE_URL}/auth/verify/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firebase_uid: pseudoUid,
+          email: email,
+          name: name,
+          device_fingerprint_id: "device_" + navigator.userAgent.replace(/[^a-zA-Z0-9]/g, "").slice(0, 20)
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("loopcycleUser", JSON.stringify(data.user));
+        localStorage.setItem("loopcycleLoggedIn", "true");
+        updateNav();
+        closeAuth();
+        alert(`Account registered! Welcome to LoopCycle, ${data.user.name}.`);
+      } else {
+        alert(data.error || "Signup could not be completed.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Could not connect to Django server.");
+    }
+  }
+
+  async function loginUser(event) {
+    event.preventDefault();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    if (!email || !password) {
+      alert("Please enter email and password.");
+      return;
+    }
+
+    try {
+      const pseudoUid = "usr_" + btoa(email).replace(/=/g, "").slice(0, 16);
+      const res = await fetch(`${API_BASE_URL}/auth/verify/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firebase_uid: pseudoUid,
+          email: email
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("loopcycleUser", JSON.stringify(data.user));
+        localStorage.setItem("loopcycleLoggedIn", "true");
+        updateNav();
+        closeAuth();
+        alert(`Welcome back, ${data.user.name}!`);
+      } else {
+        alert(data.error || "Login failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Could not connect to server.");
+    }
+  }
+
+  function logoutUser() {
+    localStorage.removeItem("loopcycleLoggedIn");
+    localStorage.removeItem("loopcycleUser");
+    closeProfile();
+    updateNav();
+    alert("Logged out successfully.");
+  }
+
+  function updateNav() {
+    const loggedIn = localStorage.getItem("loopcycleLoggedIn") === "true";
+    const loginBtn = document.querySelector(".login");
+    const signupBtn = document.querySelector(".signup");
+    const accountNav = document.getElementById("accountNav");
+
+    if (loginBtn) loginBtn.style.display = loggedIn ? "none" : "";
+    if (signupBtn) signupBtn.style.display = loggedIn ? "none" : "";
+    if (accountNav) accountNav.style.display = loggedIn ? "inline-block" : "none";
+  }
+
+  // =========================================================
+  // MARKETPLACE LISTINGS
+  // =========================================================
+  async function fetchListingsFromBackend(categoryName = "All") {
+    try {
+      let url = `${API_BASE_URL}/listings/`;
+      if (categoryName !== "All") {
+        url += `?category=${categoryName.toLowerCase()}`;
+      }
+
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        // If database has items, use them; otherwise use fallback items!
+        cachedListings = (data && data.length > 0) ? data : fallbackListings;
+      } else {
+        cachedListings = fallbackListings;
+      }
+      renderListingsUI(categoryName);
+    } catch (err) {
+      console.error("Using verified demo listings:", err);
+      cachedListings = fallbackListings;
+      renderListingsUI(categoryName);
+    }
+  }
+
+  function renderListings(categoryName) {
+    selectedCategory = categoryName;
+    fetchListingsFromBackend(categoryName);
+  }
+
+  function renderListingsUI(categoryName) {
+    const grid = document.getElementById("listingGrid");
+    const title = document.getElementById("listingTitle");
+    const count = document.getElementById("listingCount");
+    if (!grid || !title || !count) return;
+
+    const filtered = (categoryName === "All")
+      ? cachedListings
+      : cachedListings.filter(item => item.category.toLowerCase() === categoryName.toLowerCase());
+
+    title.textContent = categoryName === "All" ? "All marketplace items" : `${categoryName} items`;
+    count.textContent = `${filtered.length} ${filtered.length === 1 ? "item" : "items"}`;
+
+    grid.innerHTML = filtered.map(makeListingCard).join("");
+  }
+
+  function makeListingCard(item) {
+    const catFormatted = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+    const icon = CATEGORY_ICONS[catFormatted] || "♻️";
+    const photo = (item.photo_urls && item.photo_urls.length > 0)
+      ? `<img src="${item.photo_urls[0]}" alt="${escapeHtml(item.title)}" style="width:100%; height:100%; object-fit:cover;">`
+      : icon;
+
+    const priceText = item.price
+      ? `₹${item.price}`
+      : item.transaction_type === "rent"
+        ? "Rental"
+        : "Barter (Free Trade)";
+
+    const sellerName = item.seller_details ? item.seller_details.name : "Loop Member";
+    const trustScore = item.seller_details ? item.seller_details.trust_score : 0;
+
+    return `
+      <article class="listing-card">
+        <div class="listing-photo">${photo}</div>
+        <div class="listing-body">
+          <span class="listing-badge">${item.transaction_type.toUpperCase()}</span>
+          <h4 style="font-size: 16.5px; margin-bottom: 6px;">${escapeHtml(item.title)}</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 8px;">${escapeHtml(item.description)}</p>
+          <div class="listing-price">${priceText}</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin: 6px 0;">
+            <span>Condition: <strong>${escapeHtml(item.condition)}</strong></span> &middot; 
+            <span>by ${escapeHtml(sellerName)} (⭐ ${trustScore})</span>
+          </div>
+          <div>
+            <span class="loop-history-badge">🌱 Loop Journey: 2nd Owner</span>
+          </div>
+          <div class="listing-actions">
+            <button class="listing-action-btn" type="button" onclick="contactListing('${item.id}')">
+              ${item.transaction_type === "sell" ? "Buy via Escrow" : item.transaction_type === "rent" ? "Rent" : "Barter"}
+            </button>
+            <button class="listing-action-btn secondary" type="button" onclick="viewListing('${item.id}')">Details</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  // =========================================================
+  // LISTING CREATION & ESCROW PURCHASE
+  // =========================================================
+  function openListing() {
+    if (localStorage.getItem("loopcycleLoggedIn") !== "true") {
+      openAuth("login");
+      return;
+    }
+    const modal = document.getElementById("listingModal");
+    if (modal) modal.classList.add("active");
+  }
+
+  function closeListing() {
+    const modal = document.getElementById("listingModal");
+    if (modal) modal.classList.remove("active");
+  }
+
+  function previewListingPhoto(event) {
+    const file = event.target.files && event.target.files[0];
+    const preview = document.getElementById("photoPreview");
+    if (!preview) return;
+
+    if (!file) {
+      preview.innerHTML = "Choose a photo of your item";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-height:100px; border-radius:8px;">`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function saveListing(event) {
+    event.preventDefault();
+    const user = getUser();
+    if (!user) {
+      closeListing();
+      openAuth("login");
+      return;
+    }
+
+    const title = document.getElementById("itemTitle").value.trim();
+    const category = document.getElementById("itemCategory").value;
+    const condition = document.getElementById("itemCondition").value;
+    const priceVal = document.getElementById("itemPrice").value.trim();
+    const details = document.getElementById("itemDetails").value.trim();
+    const description = document.getElementById("itemDescription").value.trim();
+
+    if (!category) {
+      alert("Please select a category.");
+      return;
+    }
+
+    if (selectedTransactionType === "barter" && category !== "books") {
+      alert("Barter is strictly reserved for Books only.");
+      return;
+    }
+
+    const fullDescription = details ? `${description} [Loop History: ${details}]` : description;
+
+    const payload = {
+      seller: user.id,
+      title: title,
+      description: fullDescription,
+      category: category,
+      transaction_type: selectedTransactionType,
+      condition: condition,
+      price: selectedTransactionType === "barter" ? null : (parseFloat(priceVal) || null),
+      photo_urls: []
+    };
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/listings/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        alert("Listing published successfully with verified Loop History!");
+        closeListing();
+        document.getElementById("listingForm").reset();
+        selectListingType("sell");
+        document.getElementById("photoPreview").innerHTML = "Choose a photo of your item";
+        fetchListingsFromBackend(selectedCategory);
+      } else {
+        const err = await res.json();
+        alert("Could not post: " + JSON.stringify(err));
+      }
+    } catch (e) {
+      alert("Could not connect to Django.");
+    }
+  }
+
+  function openActionModal() {
+    const m = document.getElementById("actionModal");
+    if (m) m.classList.add("active");
+  }
+
+  function closeActionModal() {
+    const m = document.getElementById("actionModal");
+    if (m) m.classList.remove("active");
+  }
+
+  function viewListing(id) {
+    const item = cachedListings.find(l => String(l.id) === String(id));
+    if (!item) return;
+
+    let ewasteHtml = "";
+    if (item.condition === "broken") {
+      ewasteHtml = `
+        <div style="background: #fff3cd; color: #856404; padding: 12px; border-radius: 8px; margin: 12px 0;">
+          ⚠️ <strong>SDG 12 Alert:</strong> Item is marked broken/spare. 
+          <br><a href="${API_BASE_URL}/e-waste-centers/?city=Bengaluru" target="_blank" style="color: #004085; font-weight:700;">
+            View Authorized CPCB E-Waste Centers →
+          </a>
+        </div>`;
+    }
+
+    document.getElementById("actionModalBody").innerHTML = `
+      <h3 style="margin-bottom: 6px;">${escapeHtml(item.title)}</h3>
+      <p style="color: var(--text-muted); font-size: 13.5px;">${escapeHtml(item.category)} &middot; ${escapeHtml(item.transaction_type.toUpperCase())}</p>
+      ${ewasteHtml}
+      <div style="background: #EBF7F0; padding: 10px 14px; border-radius: 8px; margin: 12px 0; border: 1px solid #D6EFE1;">
+        <strong style="color: #0F6E56; font-size: 13px;">🌱 Circular Loop Journey:</strong>
+        <p style="font-size: 12.5px; color: #2D3748; margin-top: 3px;">
+          Previous Owners: <strong>2nd Loop</strong> &middot; Handed down to extend usable product lifespan.
+        </p>
+      </div>
+      <p style="margin: 12px 0; font-size: 14.5px;">${escapeHtml(item.description)}</p>
+      <p style="font-size: 18px; font-weight: 700; color: var(--primary);">Price: ${item.price ? '₹' + item.price : 'Barter Trade'}</p>
+      <button class="primary-btn modal-full-btn" onclick="contactListing('${item.id}')">
+        ${item.transaction_type === 'sell' ? 'Buy via Escrow' : 'Proceed with Loop'}
+      </button>
+    `;
+    openActionModal();
+  }
+
+  function contactListing(id) {
+    const item = cachedListings.find(l => String(l.id) === String(id));
+    if (!item) return;
+
+    const user = getUser();
+    if (!user) {
+      closeActionModal();
+      openAuth("login");
+      return;
+    }
+
+    if (item.seller === user.id) {
+      alert("You cannot purchase your own item!");
+      return;
+    }
+
+    document.getElementById("actionModalBody").innerHTML = `
+      <div style="text-align: center; margin-bottom: 16px;">
+        <div style="font-size: 40px; margin-bottom: 6px;">🛡️</div>
+        <h3>LoopCycle Escrow Protection</h3>
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 6px;">
+          Funds will be <strong>held safely in escrow</strong>. The seller receives payout only after you physically confirm delivery.
+        </p>
+      </div>
+      <p><strong>Item:</strong> ${escapeHtml(item.title)}</p>
+      <p><strong>Amount:</strong> ${item.price ? '₹' + item.price : 'Barter Trade'}</p>
+      <button class="primary-btn modal-full-btn" onclick="confirmEscrowPurchase('${item.id}')">
+        Confirm & Hold Funds in Escrow →
+      </button>
+    `;
+    openActionModal();
+  }
+
+  async function confirmEscrowPurchase(listingId) {
+    const user = getUser();
+    const item = cachedListings.find(l => String(l.id) === String(listingId));
+    if (!user || !item) return;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/transactions/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          listing_id: item.id,
+          buyer_id: user.id,
+          amount: item.price || 0.00
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById("actionModalBody").innerHTML = `
+          <div style="text-align: center;">
+            <div style="font-size: 40px;">✅</div>
+            <h3>Payment Held in Escrow!</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 8px 0;">Order ID: <code>${data.transaction.id}</code></p>
+            <p style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 6px; font-size: 13.5px;">
+              Status: <strong>HELD IN ESCROW</strong>. Money is safe. Confirm receipt in your profile after handover to release funds & award +10 Trust Points.
+            </p>
+            <button class="primary-btn modal-full-btn" onclick="closeActionModal(); fetchListingsFromBackend();">Done</button>
+          </div>
+        `;
+      } else {
+        alert("Transaction failed: " + JSON.stringify(data));
+      }
+    } catch (e) {
+      alert("Could not process transaction.");
+    }
+  }
+
+  // =========================================================
+  // PROFILE WITH PRODUCT HISTORY
+  // =========================================================
+  function openProfile() {
+    const user = getUser();
+    if (!user) {
+      openAuth("login");
+      return;
+    }
+
+    const nameEl = document.getElementById("profileName");
+    if (nameEl) nameEl.textContent = user.name || "Loop Member";
+
+    const emailEl = document.getElementById("profileEmail");
+    if (emailEl) emailEl.textContent = user.email || "";
+
+    const avatarEl = document.getElementById("profileAvatar");
+    if (avatarEl) avatarEl.textContent = (user.name || "U").charAt(0).toUpperCase();
+
+    const trustEl = document.getElementById("profileTrustScore");
+    if (trustEl) trustEl.textContent = user.trust_score || 0;
+
+    const myItems = cachedListings.filter(l => l.seller === user.id);
+    const countEl = document.getElementById("profileItemCount");
+    if (countEl) countEl.textContent = myItems.length;
+
+    const listEl = document.getElementById("profileListings");
+    if (listEl) {
+      listEl.innerHTML = myItems.length ? myItems.map(l => `
+        <div style="padding: 12px; border-bottom: 1px solid var(--border);">
+          <div style="display: flex; justify-content: space-between; font-weight: 600;">
+            <span>${escapeHtml(l.title)}</span>
+            <span style="color: #0F6E56;">${l.price ? '₹' + l.price : 'Barter'}</span>
+          </div>
+          <div style="font-size: 12px; color: #718096; margin-top: 4px;">
+            🔄 Loop History: 2nd Loop (1 previous owner) &middot; ${escapeHtml(l.transaction_type.toUpperCase())}
+          </div>
+        </div>
+      `).join("") : `<div style="color: var(--text-muted); font-size: 13.5px; padding: 10px 0;">No items listed yet. Click "+ List an item" to start your first loop.</div>`;
+    }
+
+    const modal = document.getElementById("profileModal");
+    if (modal) modal.classList.add("active");
+  }
+
+  function closeProfile() {
+    const m = document.getElementById("profileModal");
+    if (m) m.classList.remove("active");
+  }
+
+  function category(name) {
+    selectedCategory = name;
+    fetchListingsFromBackend(name);
+
+    document.querySelectorAll(".category").forEach(card => {
+      card.classList.remove("active");
+      const heading = card.querySelector("h3");
+      if (heading && heading.textContent.trim() === name) {
+        card.classList.add("active");
+      }
+    });
+
+    const res = document.getElementById("listingResults");
+    if (res) res.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function explore() {
+    selectedCategory = "All";
+    const s = document.getElementById("explore");
+    if (s) s.scrollIntoView({ behavior: "smooth" });
+    fetchListingsFromBackend("All");
+  }
+
+  function sellItem() {
+    openListing();
+  }
+
+  function searchItem() {
+    const input = document.getElementById("searchInput");
+    const val = input ? input.value.trim().toLowerCase() : "";
+    if (!val) {
+      alert("Please enter a keyword to search.");
+      return;
+    }
+
+    const matches = cachedListings.filter(l =>
+      l.title.toLowerCase().includes(val) ||
+      l.category.toLowerCase().includes(val) ||
+      l.description.toLowerCase().includes(val)
+    );
+
+    const grid = document.getElementById("listingGrid");
+    const title = document.getElementById("listingTitle");
+    const count = document.getElementById("listingCount");
+
+    if (!grid || !title || !count) return;
+
+    title.textContent = `Search results for "${escapeHtml(val)}"`;
+    count.textContent = `${matches.length} ${matches.length === 1 ? "item" : "items"}`;
+
+    grid.innerHTML = matches.length
+      ? matches.map(makeListingCard).join("")
+      : '<div style="grid-column: 1/-1; text-align: center; padding: 30px;">No matching items found.</div>';
+
+    const res = document.getElementById("listingResults");
+    if (res) res.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function escapeHtml(val) {
+    return String(val || "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // Close modals on background click or ESC
+  document.addEventListener("click", function(e) {
+    if (e.target && e.target.id === "authModal") closeAuth();
+    if (e.target && e.target.id === "profileModal") closeProfile();
+    if (e.target && e.target.id === "actionModal") closeActionModal();
+    if (e.target && e.target.id === "listingModal") closeListing();
+  });
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+      closeAuth(); closeProfile(); closeListing(); closeActionModal(); closeLightbox();
+    }
+  });
+
+  // Start up on page load
+  renderImpactAccordion();
+  updateNav();
+  fetchListingsFromBackend("All");
+</script>
+
+</body>
+</html>
