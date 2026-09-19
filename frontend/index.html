@@ -45,7 +45,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 8%;
+            padding: 16px 8%;
             background: var(--surface);
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -74,7 +74,7 @@
             text-decoration: none;
             color: var(--text-muted);
             font-weight: 500;
-            font-size: 14.5px;
+            font-size: 14px;
             transition: color 0.2s;
         }
 
@@ -82,20 +82,43 @@
             color: var(--accent);
         }
 
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .nav-buttons .login {
-            margin-right: 15px;
             text-decoration: none;
             color: var(--primary);
             font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-list-btn {
+            background: #0F6E56;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-list-btn:hover {
+            background: #08503e;
         }
 
         .signup {
             background: var(--accent);
             color: white;
-            padding: 9px 22px;
-            border-radius: 30px;
+            padding: 8px 20px;
+            border-radius: 20px;
             border: none;
             font-weight: 600;
+            font-size: 13.5px;
             cursor: pointer;
             transition: background 0.2s;
         }
@@ -107,7 +130,7 @@
         /* WHY WE EXIST — ACCORDION SECTION */
         .why-we-exist-section {
             background: #F6F4EE;
-            padding: 56px 8% 65px;
+            padding: 50px 8% 60px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -152,7 +175,7 @@
             line-height: 1.6;
         }
 
-        /* ACCORDION CONTAINER (NO SOLID BLANK BOX) */
+        /* ACCORDION CONTAINER */
         .options {
             display: flex;
             width: 100%;
@@ -312,9 +335,9 @@
         .get-started-btn {
             background: var(--accent);
             color: white;
-            padding: 15px 38px;
+            padding: 15px 36px;
             border-radius: 50px;
-            font-size: 16px;
+            font-size: 15.5px;
             font-weight: 700;
             border: none;
             cursor: pointer;
@@ -325,6 +348,24 @@
         .get-started-btn:hover {
             transform: translateY(-2px);
             background: var(--primary);
+        }
+
+        .hero-list-btn {
+            background: white;
+            color: #0F6E56;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            border: 2px solid #0F6E56;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        }
+
+        .hero-list-btn:hover {
+            background: #EBF7F0;
+            transform: translateY(-2px);
         }
 
         /* HD LIGHTBOX */
@@ -705,7 +746,9 @@
             margin-top: 16px;
         }
 
-        /* LISTING MODAL (EXACT MATCH TO IMAGE 2) */
+        /* =========================================================
+           LISTING MODAL (EXACT MATCH TO IMAGE 2 + RESTRICTED BARTER)
+           ========================================================= */
         .listing-modal-content {
             background: #ffffff;
             border-radius: 28px;
@@ -742,7 +785,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
-            padding: 9px 4px;
+            padding: 10px 4px;
             border: 1.5px solid #E2E8F0;
             border-radius: 12px;
             font-size: 12px;
@@ -854,7 +897,7 @@
         .primary-btn {
             background: var(--accent);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
             border: none;
             font-weight: 600;
@@ -864,7 +907,7 @@
         .secondary-btn {
             background: white;
             color: var(--text);
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
             border: 1px solid var(--border);
             font-weight: 600;
@@ -950,7 +993,7 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- NAVBAR (Smooth scroll tabs + Prominent List an Item Button) -->
 <nav>
     <a href="#" class="logo">Loop<span>Cycle</span></a>
     <div class="nav-links">
@@ -962,19 +1005,21 @@
         <a href="#trust">Trust</a>
     </div>
     <div class="nav-buttons">
+        <!-- Prominent List an Item Navbar Button -->
+        <button class="nav-list-btn" type="button" onclick="openListing()">+ List an Item</button>
         <a href="javascript:void(0)" class="login" onclick="openAuth('login')">Log in</a>
         <button class="signup" type="button" onclick="openAuth('signup')">Sign up</button>
         <button id="accountNav" class="signup" type="button" style="display:none" onclick="openProfile()">Profile</button>
     </div>
 </nav>
 
-<!-- 1. WHY WE EXIST — INTERACTIVE ACCORDION (GUARANTEED VISIBLE) -->
+<!-- 1. WHY WE EXIST — INTERACTIVE 6-PANEL IMPACT ACCORDION -->
 <section id="whyWeExist" class="why-we-exist-section">
   <div style="max-width: 1060px; margin: 0 auto;">
     <div class="why-header">
       <span class="why-badge">🎯 Why LoopCycle Exists</span>
       <h1>Built around <em>six core realities</em><br>bigger than the marketplace itself.</h1>
-      <p>India generates over 1.75M tonnes of e-waste yearly, while textbook costs burden students. LoopCycle moves the needle on UN SDG 12 through verified circular reuse.</p>
+      <p>India generates over 1.75 million tonnes of e-waste yearly, while textbook costs burden students. LoopCycle moves the needle on UN SDG 12 through verified circular reuse.</p>
     </div>
 
     <!-- ACCORDION (GUARANTEED VISIBLE) -->
@@ -983,10 +1028,13 @@
       Click any goal panel to expand &middot; click <strong>"🔍 View HD"</strong> to examine full photo
     </p>
 
-    <!-- GET STARTED BUTTON -->
-    <div style="text-align: center; margin-top: 36px;">
+    <!-- GET STARTED BUTTONS (EXPLORE + GIVE SOMETHING A LOOP) -->
+    <div style="text-align: center; margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
       <button onclick="explore()" class="get-started-btn">
         Get Started — Explore Marketplace ↓
+      </button>
+      <button onclick="openListing()" class="hero-list-btn">
+        ♻ Give something a loop (+ List Item)
       </button>
     </div>
   </div>
@@ -1042,8 +1090,14 @@
 
     <div class="listing-results" id="listingResults">
         <div class="listing-results-header">
-            <h3 id="listingTitle">All marketplace items</h3>
-            <span id="listingCount" style="color: var(--text-muted); font-size: 14px;">4 items</span>
+            <div>
+                <h3 id="listingTitle">All marketplace items</h3>
+                <span id="listingCount" style="color: var(--text-muted); font-size: 14px;">4 items</span>
+            </div>
+            <!-- Marketplace List Button -->
+            <button onclick="openListing()" class="primary-btn" style="background: #0F6E56;">
+                + List an Item
+            </button>
         </div>
         <div class="listing-grid" id="listingGrid"></div>
     </div>
@@ -1169,7 +1223,7 @@
 </section>
 
 <!-- =========================================================
-     LISTING MODAL (EXACT MATCH TO IMAGE 2 + BARTER FOR BOOKS ONLY)
+     LISTING MODAL (EXACT MATCH TO IMAGE 2 + RESTRICTED BARTER)
      ========================================================= -->
 <div id="listingModal" class="modal-overlay">
   <div class="listing-modal-content">
@@ -1213,7 +1267,7 @@
             🤝 Barter
           </div>
         </div>
-        <p id="barterNotice" style="font-size: 11px; color: #0F6E56; margin-top: 5px;">
+        <p id="barterNotice" style="font-size: 11px; color: #0F6E56; margin-top: 6px;">
           * Note: Barter is strictly reserved for Books/Textbooks.
         </p>
       </div>
@@ -1300,7 +1354,7 @@
   </div>
 </div>
 
-<!-- PROFILE MODAL (WITH LOOP HISTORY OF OWNERS) -->
+<!-- PROFILE MODAL (RESTORED LIST BUTTON + LOOP HISTORY) -->
 <div id="profileModal" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close" onclick="closeProfile()">×</button>
@@ -1314,9 +1368,14 @@
       <div class="profile-stat"><strong id="profileTrustScore">0</strong><span>Trust Score</span></div>
       <div class="profile-stat"><strong style="color: var(--accent);">Verified</strong><span>Status</span></div>
     </div>
-    <div style="margin: 20px 0;">
+    <div style="margin: 18px 0;">
       <h3 style="font-size: 15px; margin-bottom: 10px;">My Circular Loop Journey & Listed Items</h3>
       <div id="profileListings"></div>
+    </div>
+    <!-- Profile Action Buttons -->
+    <div style="display: flex; gap: 10px; margin: 15px 0 10px;">
+      <button class="primary-btn" style="flex: 1; background: #0F6E56;" onclick="closeProfile(); openListing();">+ List an Item</button>
+      <button class="secondary-btn" style="flex: 1;" onclick="closeProfile(); explore();">Explore Market</button>
     </div>
     <button class="logout-btn" onclick="logoutUser()">Log out</button>
   </div>
@@ -1454,10 +1513,8 @@
       const el = document.createElement('div');
       el.className = 'option' + (index === currentImpactIndex ? ' active' : '');
       
-      // Start immediately with web image so it NEVER shows a blank box!
       el.style.backgroundImage = `url('${opt.web}')`;
 
-      // Check if local image exists and swap it in
       const testImg = new Image();
       testImg.src = opt.local;
       testImg.onload = () => { el.style.backgroundImage = `url('${opt.local}')`; };
@@ -1720,14 +1777,13 @@
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        // If database has items, use them; otherwise use fallback items!
         cachedListings = (data && data.length > 0) ? data : fallbackListings;
       } else {
         cachedListings = fallbackListings;
       }
       renderListingsUI(categoryName);
     } catch (err) {
-      console.error("Using verified demo listings:", err);
+      console.error("Using demo listings:", err);
       cachedListings = fallbackListings;
       renderListingsUI(categoryName);
     }
@@ -1800,7 +1856,8 @@
   // LISTING CREATION & ESCROW PURCHASE
   // =========================================================
   function openListing() {
-    if (localStorage.getItem("loopcycleLoggedIn") !== "true") {
+    const user = getUser();
+    if (!user) {
       openAuth("login");
       return;
     }
