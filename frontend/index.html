@@ -1898,7 +1898,8 @@
 
     const title = document.getElementById("itemTitle").value.trim();
     const category = document.getElementById("itemCategory").value;
-    const condition = document.getElementById("itemCondition").value;
+    const conditionVal = document.getElementById("itemCondition").value;
+    const condition = (conditionVal === "broken") ? "broken" : "working";
     const priceVal = document.getElementById("itemPrice").value.trim();
     const details = document.getElementById("itemDetails").value.trim();
     const description = document.getElementById("itemDescription").value.trim();
